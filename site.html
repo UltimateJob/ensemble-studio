@@ -630,5 +630,26 @@ body{
   }
 })();
 </script>
+<script src="ui.js"></script>
+
+<script>
+(function(){
+  const $$ = s => [...document.querySelectorAll(s)];
+  const map = {
+    'ClawHunt 2026': 'ClawHunt Builder Camp 2026 · Agent 赛道。<br>本原型为参赛作品，数据为演示用途。',
+    'Agent 赛道': '赛道要求：让 Agent 替人把一件真实的事干完，现场演示「给任务 → 出结果」的完整过程。',
+    '原型说明': '这是一个可运行的前端原型：四个页面、一套设计 token、零依赖。<br>查看仓库：github.com/UltimateJob/ensemble-studio'
+  };
+  $$('.f-col a').forEach(a => {
+    const label = a.textContent.trim();
+    if(a.getAttribute('href') === '#' && map[label]){
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        UI.dialog({ title: label, body: '<p>' + map[label] + '</p>', ok: '知道了', hideCancel: true });
+      });
+    }
+  });
+})();
+</script>
 </body>
 </html>

@@ -410,5 +410,45 @@ body{ min-height:100vh; }
   });
 })();
 </script>
+<script src="ui.js"></script>
+
+<script>
+(function(){
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  /* 移除成员 */
+  $$('.x').forEach(b => b.addEventListener('click', () => {
+    const row = b.closest('.row');
+    const name = row.querySelector('.row-n').textContent.trim().split(' ')[0];
+    UI.dialog({
+      title: '移出 ' + name + '？',
+      body: '<p>它负责的环节会由工头临时接管，已产出的文件保留。</p>',
+      ok: '移出', cancel: '取消', danger: true,
+      onOk: () => { row.remove(); UI.toast(name + ' 已移出'); }
+    });
+  }));
+
+  /* 添加 Agent */
+  $$('.add button').forEach(b => b.addEventListener('click', () => {
+    const isExt = b.textContent.includes('外部');
+    UI.dialog({
+      title: isExt ? '接入外部 Agent' : '从 Agent 库添加',
+      body: isExt
+        ? '<p>给它一个 HTTP 端点，约定输入输出格式，它就会出现在群里。</p><div class="ui-code">POST https://your-service.com/agent</div>'
+        : '<p>平台提供的岗位：<br>法务审阅 · 数据清洗 · 图表生成 · 翻译校对</p>',
+      ok: isExt ? '去配置' : '添加',
+      onOk: () => UI.toast(isExt ? '等待对方返回握手信息' : '已加入 1 个 Agent')
+    });
+  }));
+
+  /* 创建 */
+  const go = document.querySelector('.go button');
+  if(go) go.addEventListener('click', e => {
+    e.preventDefault();
+    UI.toast('正在创建群聊…');
+    setTimeout(() => location.href = 'chat.html', 700);
+  });
+})();
+</script>
 </body>
 </html>

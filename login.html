@@ -253,5 +253,26 @@ body::before{
   });
 })();
 </script>
+<script src="ui.js"></script>
+
+<script>
+(function(){
+  const $$ = s => [...document.querySelectorAll(s)];
+  $$('.legal a').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    UI.dialog({
+      title: a.textContent.trim(),
+      body: `<p>这是原型演示，条款文本尚未接入。</p><p>正式版会包含：服务范围、数据处理、模型调用与费用、终止与退款。</p>`,
+      ok: '知道了', hideCancel: true
+    });
+  }));
+  const reg = document.querySelector('.alt a');
+  if(reg) reg.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector('[data-p="mail"]') ? null : null;
+    UI.toast('手机号未注册会自动建号，无需单独注册');
+  });
+})();
+</script>
 </body>
 </html>

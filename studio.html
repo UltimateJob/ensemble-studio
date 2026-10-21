@@ -838,6 +838,70 @@
     }
   }
 
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  /* 邀请 */
+  function invite(){
+    UI.dialog({
+      title: '邀请成员加入',
+      body: '<p>把链接发给同事，对方打开就能进入「竞标工作室」。</p><div class="ui-code">https://ensemble.app/join/bid-8f3a2c</div>',
+      ok: '复制链接',
+      onOk: () => { if(navigator.clipboard) navigator.clipboard.writeText('https://ensemble.app/join/bid-8f3a2c'); UI.toast('邀请链接已复制'); }
+    });
+  }
+  const inviteBtn = $$('.btn-line').find(b => b.textContent.includes('邀请'));
+  if(inviteBtn) inviteBtn.addEventListener('click', invite);
+
+  /* 空态：四个模板 → 创建页 */
+  $$('.tpl-btn').forEach(b => b.addEventListener('click', () => { location.href = 'builder.html'; }));
+
+  /* 快捷入口 */
+  $$('.side-i').forEach(a => {
+    const label = a.textContent.trim();
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      if(label.startsWith('接入飞书')){
+        UI.dialog({
+          title: '接入飞书',
+          body: '<p>三步把这个群接进你的飞书：</p><div class="kv"><span>1</span><span>在飞书开放平台创建机器人</span></div><div class="kv"><span>2</span><span>把 Webhook 地址填进来</span></div><div class="kv"><span>3</span><span>把机器人拉进群</span></div><div class="ui-code">https://api.ensemble.app/hook/feishu</div>',
+          ok: '去授权', cancel: '稍后'
+        });
+      } else if(label.startsWith('邀请成员')){
+        invite();
+      } else if(label.startsWith('账户设置')){
+        UI.dialog({
+          title: '账户设置',
+          body: '<div class="kv"><span>姓名</span><b>林默</b></div><div class="kv"><span>邮箱</span><b>linmo@studio.com</b></div><div class="kv"><span>套餐</span><b>个人版</b></div><div class="kv"><span>本月额度</span><b>240 / 800 次</b></div>',
+          ok: '知道了', hideCancel: true
+        });
+      }
+    });
+  });
+
+  /* 解散群聊 */
+  const dangerBtn = $$('.d-danger button')[0];
+  if(dangerBtn) dangerBtn.addEventListener('click', () => {
+    UI.dialog({
+      title: '确定解散这个群？',
+      body: '<p>群内所有 Agent、任务与产物会被归档 30 天，之后不可恢复。</p>',
+      ok: '解散', cancel: '再想想', danger: true,
+      onOk: () => { closeDrawer(); UI.toast('群已解散'); }
+    });
+  });
+
+  /* 导航占位项 */
+  $$('.links a').forEach(a => {
+    if(a.getAttribute('href') === '#'){
+      a.addEventListener('click', e => { e.preventDefault(); UI.toast(a.textContent.trim() + ' 页面还没做'); });
+    }
+  });
+
+  /* ?open=invite 便于演示 */
+  const openParam = new URLSearchParams(location.search).get('open');
+  if(openParam === 'invite') setTimeout(invite, 120);
+  if(openParam === 'feishu') setTimeout(() => document.querySelectorAll('.side-i')[1].click(), 120);
+
   /* 主题 */
   const themer = document.getElementById('themer');
   const params = new URLSearchParams(location.search);
@@ -899,5 +963,6 @@
   document.addEventListener('keydown', e => { if(e.key === 'Escape') closeDrawer(); });
 })();
 </script>
+<script src="ui.js"></script>
 </body>
 </html>

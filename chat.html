@@ -550,5 +550,57 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
   });
 })();
 </script>
+<script src="ui.js"></script>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => [...document.querySelectorAll(s)];
+
+  /* 成员列表 */
+  const memBtn = $$('.tool.icon')[0];
+  if(memBtn) memBtn.addEventListener('click', () => {
+    const rows = [
+      ['工','工头 Conductor','调度 · 在线'],
+      ['查','查证 Scout','检索 · 在线'],
+      ['写','撰写 Scribe','生成 · 在线'],
+      ['审','审校 Auditor','只挑错 · 在线'],
+      ['交','交付 Courier','组包 · 空闲'],
+      ['价','报价测算','Webhook · 已连通'],
+      ['飞','飞书群桥','已连接 · 3 人']
+    ].map(r => `<div class="kv"><span style="width:20px;color:var(--tx-4)">${r[0]}</span><span>${r[1]}<br><span style="font-size:11px;color:var(--tx-4)">${r[2]}</span></span></div>`).join('');
+    UI.dialog({ title: '群成员 · 7', body: rows, ok: '关闭', hideCancel: true });
+  });
+
+  /* 打回修改 */
+  const no = $$('.act-r .no')[0];
+  if(no) no.addEventListener('click', () => {
+    UI.dialog({
+      title: '打回修改',
+      body: '<p>把问题写清楚，工头会重新派活。这一轮不会消耗额度。</p>',
+      ok: '确认打回', cancel: '取消',
+      onOk: () => UI.toast('已打回，工头重新拆解中')
+    });
+  });
+
+  /* 附件 */
+  const plus = $('.plus');
+  if(plus) plus.addEventListener('click', () => UI.toast('附件上传待接入 · 支持 PDF / DOCX / XLSX'));
+
+  /* 空态提示填入输入框 */
+  $$('.hint').forEach(h => h.addEventListener('click', () => {
+    const ta = $('#ta');
+    if(ta){ ta.value = h.textContent.trim(); ta.focus(); }
+  }));
+
+  /* 产物文件行 */
+  $$('.p-row').forEach(r => r.addEventListener('click', () => {
+    $$('.p-row').forEach(x => x.classList.remove('on'));
+    r.classList.add('on');
+    const n = r.querySelector('.f-n');
+    if(n) UI.toast('打开 ' + n.textContent.trim());
+  }));
+})();
+</script>
 </body>
 </html>
