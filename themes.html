@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>选一套主题 · 合奏</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+body{
+  background:
+    radial-gradient(60% 50% at 10% -4%, rgba(112,155,255,.30), transparent 66%),
+    radial-gradient(56% 48% at 96% 100%, rgba(178,136,255,.24), transparent 66%),
+    #F4F6FD;
+  min-height:100vh;
+  padding:52px 0 70px;
+}
+.wrap{ max-width:1480px; margin:0 auto; padding:0 40px; }
+
+.head{ text-align:center; margin-bottom:44px; }
+.head .k{
+  font-size:10px; font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--tx-3);
+}
+.head h1{
+  margin-top:14px; font-size:34px; font-weight:600; letter-spacing:-.035em;
+}
+.head p{ margin-top:12px; font-size:14px; color:var(--tx-3); }
+
+.grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:26px;
+}
+
+.card{
+  border-radius:20px; overflow:hidden;
+  background:rgba(255,255,255,.7);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    0 20px 50px -22px rgba(62,86,170,.28);
+  transition:transform .24s cubic-bezier(.22,.61,.36,1), box-shadow .24s;
+  text-decoration:none; color:inherit;
+  display:block;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),
+    0 30px 64px -24px rgba(62,86,170,.36);
+}
+
+.shot{
+  width:100%; height:428px; overflow:hidden;
+  background:#fff; position:relative;
+  border-bottom:1px solid rgba(120,130,170,.12);
+}
+.shot iframe{
+  width:1440px; height:900px; border:0; display:block;
+  transform:scale(.4743); transform-origin:top left;
+  pointer-events:none;
+}
+
+.meta{
+  padding:16px 20px 18px;
+  display:flex; align-items:center; gap:14px;
+}
+.sw{
+  display:flex; gap:4px;
+}
+.sw i{
+  width:16px; height:16px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 1px 3px rgba(0,0,0,.12);
+}
+.nm{ font-size:14px; font-weight:600; }
+.ds{ font-size:11px; color:var(--tx-3); margin-top:2px; }
+.go{
+  margin-left:auto;
+  height:32px; padding:0 14px; border-radius:99px;
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:12px; font-weight:500;
+  background:rgba(255,255,255,.8);
+  border:1px solid rgba(120,130,170,.16);
+  color:var(--tx-2);
+}
+.card:hover .go{ background:#1B1E2B; color:#fff; border-color:transparent; }
+
+.foot{
+  margin-top:44px; text-align:center;
+  font-size:12px; color:var(--tx-3);
+}
+.foot a{ color:var(--tx); border-bottom:1px solid rgba(120,130,170,.3); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="k">Liquid Glass · 4 options</div>
+    <h1>选一套主题</h1>
+    <p>同一套界面，四种光。点任意一张进全屏，右下角可以随时切换。</p>
+  </div>
+
+  <div class="grid">
+
+    <a class="card" href="studio.html?t=aurora">
+      <div class="shot"><iframe src="studio.html?t=aurora" scrolling="no"></iframe></div>
+      <div class="meta">
+        <div class="sw"><i style="background:#7FA4FF"></i><i style="background:#B78CFF"></i></div>
+        <div>
+          <div class="nm">极光 Aurora</div>
+          <div class="ds">蓝紫过渡，最像 Apple 默认壁纸</div>
+        </div>
+        <span class="go">用这套 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="studio.html?t=sunrise">
+      <div class="shot"><iframe src="studio.html?t=sunrise" scrolling="no"></iframe></div>
+      <div class="meta">
+        <div class="sw"><i style="background:#FFB07A"></i><i style="background:#FF94AE"></i></div>
+        <div>
+          <div class="nm">晨曦 Sunrise</div>
+          <div class="ds">暖橙粉，柔和，适合长时间看</div>
+        </div>
+        <span class="go">用这套 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="studio.html?t=mint">
+      <div class="shot"><iframe src="studio.html?t=mint" scrolling="no"></iframe></div>
+      <div class="meta">
+        <div class="sw"><i style="background:#6FE3C6"></i><i style="background:#6EC8F5"></i></div>
+        <div>
+          <div class="nm">薄荷 Mint</div>
+          <div class="ds">青绿通透，清爽，偏「效率工具」</div>
+        </div>
+        <span class="go">用这套 →</span>
+      </div>
+    </a>
+
+    <a class="card" href="studio.html?t=pearl">
+      <div class="shot"><iframe src="studio.html?t=pearl" scrolling="no"></iframe></div>
+      <div class="meta">
+        <div class="sw"><i style="background:#D8DEF0"></i><i style="background:#EFE6DA"></i></div>
+        <div>
+          <div class="nm">珠光 Pearl</div>
+          <div class="ds">几乎无色，只有微妙光泽，最克制</div>
+        </div>
+        <span class="go">用这套 →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="foot">
+    四套共用一套变量，<a href="studio.html">进工作台</a> 后右下角可随时切换。
+  </div>
+</div>
+</body>
+</html>

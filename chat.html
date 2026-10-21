@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="pearl">
+<head>
+<meta charset="UTF-8">
+<title>标书攻坚组 · 合奏</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+body{ height:100vh; overflow:hidden; background:var(--bg); }
+
+.app{ height:100vh; display:flex; flex-direction:column; }
+
+/* ================= 顶栏 ================= */
+.bar{
+  flex:0 0 54px; height:54px;
+  display:flex; align-items:center; gap:12px;
+  padding:0 22px;
+  border-bottom:1px solid var(--glass-line-2);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(30px) saturate(180%);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75);
+  position:relative; z-index:40;
+}
+.back{
+  width:30px; height:30px; border-radius:8px;
+  display:grid; place-items:center; color:var(--tx-3);
+}
+.back:hover{ background:var(--panel-3); color:var(--tx); }
+
+.g-ic{
+  width:32px; height:32px; border-radius:50%;
+  background:var(--accent-soft); color:var(--accent);
+  display:grid; place-items:center;
+  font-size:12px; font-weight:600;
+}
+.g-t{ font-size:14px; font-weight:600; letter-spacing:-.01em; }
+.g-s{
+  font-size:11px; color:var(--tx-3); margin-top:1px;
+  display:flex; align-items:center; gap:6px;
+}
+.g-s .d{ width:5px; height:5px; border-radius:99px; background:var(--accent); }
+
+.bar-r{ margin-left:auto; display:flex; align-items:center; gap:6px; }
+.tool{
+  height:30px; padding:0 11px; border-radius:8px;
+  display:flex; align-items:center; gap:6px;
+  font-size:12px; color:var(--tx-2);
+  transition:background .15s, color .15s;
+}
+.tool:hover{ background:var(--panel-3); color:var(--tx); }
+.tool .n{
+  font-size:10px; font-family:var(--mono);
+  color:var(--tx-4);
+}
+.tool.on{ background:var(--panel); box-shadow:0 1px 2px rgba(60,50,35,.08); color:var(--tx); }
+.tool.icon{ width:30px; padding:0; justify-content:center; }
+
+/* ================= 消息 ================= */
+.scroll{
+  flex:1; overflow-y:auto; min-height:0;
+  padding:26px 0 10px;
+}
+.thread{
+  max-width:860px; margin:0 auto; padding:0 36px;
+}
+
+/* 系统 */
+.sys{
+  margin:0 auto 22px; width:fit-content;
+  font-size:11px; color:var(--tx-4);
+  background:var(--panel-3);
+  padding:4px 12px; border-radius:99px;
+}
+
+/* 消息行 */
+.m{ display:flex; gap:11px; margin-bottom:22px; }
+.m-b{ min-width:0; flex:1; }
+.m-h{ display:flex; align-items:baseline; gap:7px; margin-bottom:5px; }
+.m-n{ font-size:13px; font-weight:600; color:var(--tx); }
+.m-t{ font-size:11px; color:var(--tx-4); font-family:var(--mono); }
+.m-x{
+  font-size:14px; color:var(--tx-2); line-height:1.75;
+  max-width:620px;
+}
+.m-x b{ color:var(--tx); font-weight:600; }
+
+/* 人 */
+.m.me{ flex-direction:row-reverse; }
+.m.me .m-b{ display:flex; flex-direction:column; align-items:flex-end; }
+.m.me .m-h{ justify-content:flex-end; }
+.m.me .m-x{
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:9px 14px; border-radius:12px 14px 4px 14px;
+  color:var(--tx);
+  box-shadow:var(--sh-1);
+}
+
+/* 文件 */
+.f{
+  display:flex; align-items:center; gap:11px;
+  margin-top:10px; padding:9px 12px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  border-radius:12px;
+  max-width:380px;
+  cursor:pointer;
+  transition:border-color .16s, box-shadow .16s;
+}
+.f:hover{ border-color:var(--line-2); box-shadow:var(--sh-2); }
+.f-ic{
+  width:28px; height:28px; flex:0 0 28px; border-radius:8px;
+  display:grid; place-items:center;
+  font-size:8px; font-weight:600;
+  background:var(--panel-3); color:var(--tx-3);
+}
+.f-ic.zip{ background:var(--accent-soft); color:var(--accent); }
+.f-n{ font-size:13px; font-weight:500; }
+.f-s{ font-size:11px; color:var(--tx-4); margin-top:1px; }
+.f-go{ margin-left:auto; color:var(--tx-4); }
+
+/* 风险 */
+.risk{
+  margin-top:11px; max-width:540px;
+  border:1px solid var(--rose-line);
+  border-radius:12px;
+  background:var(--rose-soft);
+  overflow:hidden;
+}
+.risk-h{
+  padding:9px 13px; font-size:12px; font-weight:600; color:var(--rose);
+  border-bottom:1px solid var(--rose-line);
+  display:flex; align-items:center; gap:7px;
+}
+.risk-i{
+  display:flex; align-items:baseline; gap:9px;
+  padding:8px 13px; font-size:12px; color:var(--tx-2);
+}
+.risk-i + .risk-i{ border-top:1px solid rgba(169,59,51,.09); }
+.risk-i .k{ font-size:10px; color:var(--rose); font-weight:600; flex:0 0 auto; }
+.risk-i .p{ margin-left:auto; font-size:10px; color:var(--tx-4); font-family:var(--mono); }
+
+/* 确认 */
+.act{
+  margin-top:13px; padding:14px 15px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  max-width:520px;
+  box-shadow:var(--sh-2);
+}
+.act-t{ font-size:13px; font-weight:600; }
+.act-s{ font-size:11px; color:var(--tx-3); margin-top:3px; }
+.act-r{ display:flex; gap:8px; margin-top:12px; }
+.act-r button{ height:33px; border-radius:8px; font-size:12px; font-weight:500; }
+.act-r .no{
+  flex:0 0 86px; border:1px solid var(--line-2);
+  color:var(--tx-2); background:transparent;
+}
+.act-r .no:hover{ border-color:var(--line-3); color:var(--tx); }
+.act-r .yes{ flex:1; background:var(--brand); color:#F6F3EE; }
+.act-r .yes:hover{ background:#000; }
+.act.done{ border-color:var(--green-line); background:var(--green-soft); }
+.act.done .act-t{ color:var(--green); }
+
+/* ================= 输入 ================= */
+.composer{
+  flex:0 0 auto;
+  padding:0 22px 22px;
+}
+.composer-in{
+  max-width:812px; margin:0 auto;
+  display:flex; align-items:flex-end; gap:8px;
+  background:var(--glass);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--line-2);
+  border-radius:12px;
+  padding:8px 8px 8px 6px;
+  transition:border-color .18s, box-shadow .18s;
+}
+.composer-in:focus-within{
+  border-color:var(--line-3);
+  box-shadow:0 0 0 3px rgba(28,28,30,.04);
+}
+.plus{
+  width:32px; height:32px; flex:0 0 32px; border-radius:8px;
+  display:grid; place-items:center; color:var(--tx-3);
+}
+.plus:hover{ background:var(--panel-3); color:var(--tx); }
+.ta{
+  flex:1; border:0; outline:none; resize:none;
+  height:32px; line-height:32px;
+  font-size:14px; color:var(--tx);
+  background:transparent;
+  font-family:inherit;
+}
+.ta::placeholder{ color:var(--tx-4); }
+.send{
+  width:32px; height:32px; flex:0 0 32px; border-radius:8px;
+  background:var(--brand); color:#F6F3EE;
+  display:grid; place-items:center;
+  transition:background .15s;
+}
+.send:hover{ background:#000; }
+
+/* ================= 产物抽屉 ================= */
+.panel{
+  position:fixed; top:54px; right:0; bottom:0;
+  width:344px;
+  background:var(--panel);
+  border-left:1px solid var(--line);
+  box-shadow:-20px 0 50px -24px rgba(60,50,35,.28);
+  transform:translateX(103%);
+  transition:transform .28s cubic-bezier(.22,.61,.36,1);
+  z-index:50;
+  display:flex; flex-direction:column;
+}
+.panel.open{ transform:none; }
+
+.p-head{
+  padding:16px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center;
+  font-size:12px; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase;
+  color:var(--tx-3);
+}
+.p-x{
+  margin-left:auto; width:26px; height:26px; border-radius:6px;
+  display:grid; place-items:center; color:var(--tx-3);
+}
+.p-x:hover{ background:var(--panel-3); color:var(--tx); }
+
+.p-body{ flex:1; overflow-y:auto; padding:12px; }
+
+.p-row{
+  display:flex; align-items:center; gap:10px;
+  padding:9px 10px; border-radius:8px; cursor:pointer;
+}
+.p-row:hover{ background:var(--panel-2); }
+.p-row.on{ background:var(--panel-3); }
+
+.p-label{
+  margin:14px 4px 8px;
+  font-size:10px; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--tx-4);
+}
+
+table{ width:100%; border-collapse:collapse; }
+th{
+  text-align:left; font-size:10px; color:var(--tx-4); font-weight:500;
+  padding:7px 8px; border-bottom:1px solid var(--line);
+}
+td{
+  font-size:12px; color:var(--tx-2);
+  padding:8px; border-bottom:1px solid var(--line);
+}
+td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
+.st{ font-size:10px; }
+.st.ok{ color:var(--green); }
+.st.warn{ color:var(--amber); }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- 顶栏 -->
+  <header class="bar">
+    <a class="back" href="studio.html">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+    </a>
+    <div class="g-ic">标</div>
+    <div>
+      <div class="g-t">标书攻坚组</div>
+      <div class="g-s"><span class="d"></span>5 Agent 在线 · 已跑 41 分钟</div>
+    </div>
+
+    <div class="bar-r">
+      <button class="tool" id="artBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6l2 3h8v13H4z"/></svg>
+        产物 <span class="n">4</span>
+      </button>
+      <button class="tool icon" title="成员">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17.5" cy="9" r="2.5"/><path d="M15 20a5.5 5.5 0 0 1 6.5-4.3"/></svg>
+      </button>
+      <button class="tool icon" title="设置" onclick="location.href='studio.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="12" cy="19" r="1.2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- 消息 -->
+  <div class="scroll" id="scroll">
+    <div class="thread">
+
+      <div class="sys">13:48 · 任务已创建 · 招标文件 186 页</div>
+
+      <div class="m">
+        <div class="avatar">工</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">工头</span><span class="m-t">13:49</span></div>
+          <div class="m-x">拆成四步：查证 → 撰写 → 审校 → 交付。预计 <b>45 分钟</b>，到点我会汇报。</div>
+        </div>
+      </div>
+
+      <div class="m">
+        <div class="avatar">查</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">查证</span><span class="m-t">13:56</span></div>
+          <div class="m-x">186 页扫完了。抽出 <b>47 条</b>可核验要求，其中 <b>12 条是硬性资质</b>。每条都带原文页码。</div>
+          <div class="f">
+            <div class="f-ic">JSON</div>
+            <div class="grow">
+              <div class="f-n">01_合规条目表.json</div>
+              <div class="f-s">47 条 · 12 条硬性</div>
+            </div>
+            <svg class="f-go" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="m">
+        <div class="avatar">写</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">撰写</span><span class="m-t">14:07</span></div>
+          <div class="m-x">初稿 32 页，覆盖 38 条要求。每条陈述都挂到了条目编号上。</div>
+          <div class="f">
+            <div class="f-ic">DOC</div>
+            <div class="grow">
+              <div class="f-n">02_技术应答.docx</div>
+              <div class="f-s">32 页 · 引用 38 条</div>
+            </div>
+            <svg class="f-go" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="m">
+        <div class="avatar">审</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">审校</span><span class="m-t">14:19</span></div>
+          <div class="m-x">逐条对完了。<b>3 处会废标</b>，不是措辞问题，是硬伤。</div>
+          <div class="risk">
+            <div class="risk-h">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+              发现 3 处废标风险
+            </div>
+            <div class="risk-i"><span class="k">未响应</span><span>3.2.4 要求 ISO 27001 认证</span><span class="p">P47</span></div>
+            <div class="risk-i"><span class="k">不满足</span><span>3.1.2 三甲案例需 ≥ 3 个</span><span class="p">P12</span></div>
+            <div class="risk-i"><span class="k">不足</span><span>4.5.1 国产化信创，缺适配清单</span><span class="p">P19</span></div>
+          </div>
+          <div class="m-x" style="margin-top:10px;color:var(--tx-3);font-size:13px">我不改稿，只出清单。改不改、怎么改，你定。</div>
+        </div>
+      </div>
+
+      <div class="m me">
+        <div class="avatar me">林</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">你</span><span class="m-t">14:21</span></div>
+          <div class="m-x">ISO 证书在资质库，直接引。案例补苏州分院。</div>
+        </div>
+      </div>
+
+      <div class="m">
+        <div class="avatar">审</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">审校</span><span class="m-t">14:26</span></div>
+          <div class="m-x">已修 2 条，剩 1 条待补适配清单。风险 <b>3 → 1</b>。</div>
+        </div>
+      </div>
+
+      <div class="m">
+        <div class="avatar">交</div>
+        <div class="m-b">
+          <div class="m-h"><span class="m-n">交付</span><span class="m-t">14:31</span></div>
+          <div class="m-x">投标包组好了，4 个文件。等你确认才外发。</div>
+
+          <div class="act" id="act">
+            <div class="act-t">投标包_终版 · 4 个文件</div>
+            <div class="act-s">剩 1 条待补，其余已核验</div>
+            <div class="act-r">
+              <button class="no">打回修改</button>
+              <button class="yes" id="pass">通过并导出</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 输入 -->
+  <div class="composer">
+    <div class="composer-in">
+      <button class="plus">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <textarea class="ta" id="ta" rows="1" placeholder="说点什么，或 @ 某个 Agent…"></textarea>
+      <button class="send" id="send">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 7-7 7 7M12 19V5"/></svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- 产物抽屉 -->
+<aside class="panel" id="panel">
+  <div class="p-head">
+    产物
+    <button class="p-x" id="pClose">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <div class="p-body">
+    <div class="p-row on">
+      <div class="f-ic">JSON</div>
+      <div class="grow"><div class="f-n">01_合规条目表</div><div class="f-s">47 条</div></div>
+    </div>
+    <div class="p-row">
+      <div class="f-ic">DOC</div>
+      <div class="grow"><div class="f-n">02_技术应答</div><div class="f-s">32 页</div></div>
+    </div>
+    <div class="p-row">
+      <div class="f-ic">XLS</div>
+      <div class="grow"><div class="f-n">03_报价测算</div><div class="f-s">6 个工作表</div></div>
+    </div>
+    <div class="p-row">
+      <div class="f-ic zip">ZIP</div>
+      <div class="grow"><div class="f-n">04_投标包_终版</div><div class="f-s">2.4 MB</div></div>
+    </div>
+
+    <div class="p-label">合规点对表</div>
+    <table>
+      <thead><tr><th style="width:26px">#</th><th>要求</th><th style="width:40px">页</th></tr></thead>
+      <tbody>
+        <tr><td class="n">01</td><td>ISO 27001</td><td class="n">P47</td></tr>
+        <tr><td class="n">02</td><td>三甲案例 ≥ 3</td><td class="n">P12</td></tr>
+        <tr><td class="n">03</td><td>国产化信创</td><td class="n">P19</td></tr>
+        <tr><td class="n">04</td><td>运维 ≤ 2h</td><td class="n">P24</td></tr>
+        <tr><td class="n">05</td><td>等保三级</td><td class="n">P31</td></tr>
+      </tbody>
+    </table>
+  </div>
+</aside>
+
+<script>
+(function(){
+  const scroll = document.getElementById('scroll');
+  scroll.scrollTop = scroll.scrollHeight;
+
+  /* 产物抽屉 */
+  const panel = document.getElementById('panel');
+  const artBtn = document.getElementById('artBtn');
+  artBtn.addEventListener('click', () => {
+    panel.classList.toggle('open');
+    artBtn.classList.toggle('on');
+  });
+  document.getElementById('pClose').onclick = () => {
+    panel.classList.remove('open');
+    artBtn.classList.remove('on');
+  };
+
+  /* 发送 */
+  const ta = document.getElementById('ta');
+  const send = document.getElementById('send');
+  const thread = document.querySelector('.thread');
+
+  function fire(){
+    const v = ta.value.trim();
+    if(!v) return;
+    const el = document.createElement('div');
+    el.className = 'm me';
+    el.innerHTML =
+      '<div class="avatar me">林</div>' +
+      '<div class="m-b"><div class="m-h"><span class="m-n">你</span>' +
+      '<span class="m-t">刚刚</span></div><div class="m-x"></div></div>';
+    el.querySelector('.m-x').textContent = v;
+    thread.appendChild(el);
+    ta.value = '';
+    ta.style.height = '32px';
+    scroll.scrollTo({ top: scroll.scrollHeight, behavior:'smooth' });
+  }
+  send.addEventListener('click', fire);
+  ta.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); fire(); }
+  });
+  ta.addEventListener('input', () => {
+    ta.style.height = '32px';
+    ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+  });
+
+  /* 通过 */
+  const pass = document.getElementById('pass');
+  const act = document.getElementById('act');
+  pass.addEventListener('click', () => {
+    act.classList.add('done');
+    act.querySelector('.act-t').textContent = '已通过 · 投标包已导出';
+    act.querySelector('.act-s').textContent = '已回写飞书群 · 41 分钟完成';
+    act.querySelector('.act-r').innerHTML = '<button class="no" style="flex:1;border-color:var(--green-line);color:var(--green)">完成</button>';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="pearl">
+<head>
+<meta charset="UTF-8">
+<title>登录 · 合奏</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+body{
+  height:100vh;
+  display:grid; place-items:center;
+  position:relative;
+  overflow:hidden;
+}
+
+/* 背景细网格 */
+body::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(20,20,40,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,20,40,.022) 1px, transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 10%, transparent 78%);
+          mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 10%, transparent 78%);
+}
+
+.wrap{ position:relative; z-index:1; width:404px; }
+
+/* 品牌 */
+.brand{ text-align:center; margin-bottom:26px; }
+.brand-m{
+  width:46px; height:46px; border-radius:50%;
+  background:var(--brand); color:#F6F3EE;
+  display:grid; place-items:center; margin:0 auto;
+  font-size:19px; font-weight:600;
+  box-shadow:0 8px 22px -8px rgba(28,28,30,.45);
+}
+.brand-n{ margin-top:14px; font-size:16px; font-weight:600; letter-spacing:.01em; }
+.brand-s{ margin-top:4px; font-size:12px; color:var(--tx-3); }
+
+/* 卡片 */
+.card{
+  border-radius:16px;
+  padding:26px 26px 22px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    0 26px 60px -26px rgba(20,20,40,.24),
+    var(--glass-sh);
+}
+
+/* 分段 */
+.seg{
+  display:flex; gap:3px;
+  background:var(--panel-3);
+  padding:3px; border-radius:8px;
+}
+.seg button{
+  flex:1; height:31px; border-radius:8px;
+  font-size:13px; color:var(--tx-3);
+  transition:all .16s;
+}
+.seg button:hover{ color:var(--tx-2); }
+.seg button.on{
+  background:var(--panel); color:var(--tx); font-weight:500;
+  box-shadow:0 1px 2px rgba(60,50,35,.10);
+}
+
+/* 表单 */
+.pane{ display:none; padding-top:18px; }
+.pane.on{ display:block; animation:fadeUp .28s cubic-bezier(.22,.61,.36,1); }
+@keyframes fadeUp{ from{ opacity:0; transform:translateY(5px) } to{ opacity:1; transform:none } }
+
+.field label{
+  display:block; font-size:11px; color:var(--tx-3);
+  margin-bottom:6px; letter-spacing:.01em;
+}
+.field + .field{ margin-top:13px; }
+.ipt{
+  width:100%; height:42px; padding:0 13px;
+  border:1px solid var(--line-2); border-radius:12px;
+  background:rgba(255,255,255,.7); font-size:13px; color:var(--tx);
+  transition:border-color .16s, box-shadow .16s;
+}
+.ipt::placeholder{ color:var(--tx-4); }
+.ipt:focus{
+  border-color:var(--tx-3);
+  box-shadow:0 0 0 3px rgba(28,28,30,.05);
+}
+
+.row{ display:flex; gap:8px; }
+.row .ipt{ flex:1; }
+.code-btn{
+  flex:0 0 104px; height:42px; border-radius:8px;
+  border:1px solid var(--line-2); background:var(--panel);
+  font-size:12px; color:var(--tx-2);
+  transition:all .16s;
+}
+.code-btn:hover{ border-color:var(--line-3); color:var(--tx); }
+.code-btn:disabled{ color:var(--tx-4); cursor:default; }
+
+.submit{
+  width:100%; height:44px; margin-top:20px;
+  border-radius:12px;
+  background:linear-gradient(160deg,var(--brand),var(--brand-2)); color:var(--ink-on-brand);
+  box-shadow:0 8px 20px -8px rgba(20,20,30,.5), inset 0 1px 0 rgba(255,255,255,.24);
+  font-size:14px; font-weight:500;
+  transition:all .16s;
+}
+.submit:hover{ background:#000; }
+.submit:active{ transform:scale(.995); }
+
+/* 二维码 */
+.qr{ text-align:center; padding:8px 0 4px; }
+.qr-box{
+  width:150px; height:150px; margin:0 auto;
+  border-radius:12px; border:1px dashed var(--line-2);
+  display:grid; place-items:center;
+  background:var(--panel-2);
+  position:relative; overflow:hidden;
+}
+.qr-box::before{
+  content:""; position:absolute; inset:14px;
+  background-image:
+    linear-gradient(90deg, var(--tx-4) 2px, transparent 2px),
+    linear-gradient(var(--tx-4) 2px, transparent 2px);
+  background-size:11px 11px;
+  opacity:.22;
+  border-radius:4px;
+}
+.qr-box svg{ position:relative; z-index:1; opacity:.5; }
+.qr p{ margin-top:12px; font-size:12px; color:var(--tx-3); }
+.qr .wx{
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:12px; color:var(--green); margin-top:6px;
+}
+
+/* 底部 */
+.alt{
+  margin-top:18px; text-align:center;
+  font-size:12px; color:var(--tx-3);
+}
+.alt a{ color:var(--tx); font-weight:500; border-bottom:1px solid var(--line-2); }
+.alt a:hover{ border-color:var(--tx-3); }
+
+.legal{
+  margin-top:18px; text-align:center;
+  font-size:11px; color:var(--tx-4); line-height:1.7;
+}
+.legal a{ color:var(--tx-3); }
+
+.foot-note{
+  margin-top:22px; text-align:center;
+  font-size:10px; color:var(--tx-4);
+  letter-spacing:.04em;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="brand-m">合</div>
+    <div class="brand-n">合奏</div>
+    <div class="brand-s">五个声部，一个成品</div>
+  </div>
+
+  <div class="card glass">
+    <div class="seg" id="seg">
+      <button class="on" data-p="phone">手机号</button>
+      <button data-p="wx">微信</button>
+      <button data-p="mail">邮箱</button>
+    </div>
+
+    <!-- 手机 -->
+    <div class="pane on" data-pane="phone">
+      <div class="field">
+        <label>手机号</label>
+        <div class="row">
+          <input class="ipt" placeholder="+86  138 0000 0000">
+        </div>
+      </div>
+      <div class="field">
+        <label>验证码</label>
+        <div class="row">
+          <input class="ipt" placeholder="6 位数字">
+          <button class="code-btn" id="codeBtn">获取验证码</button>
+        </div>
+      </div>
+      <button class="submit" onclick="location.href='studio.html'">登录 / 注册</button>
+      <div class="alt">未注册的手机号将自动创建账号</div>
+    </div>
+
+    <!-- 微信 -->
+    <div class="pane" data-pane="wx">
+      <div class="qr">
+        <div class="qr-box">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM19 19h2v2h-2z"/></svg>
+        </div>
+        <p>打开微信扫一扫</p>
+        <div class="wx">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8.7 3C4.9 3 2 5.5 2 8.6c0 1.8 1 3.4 2.6 4.4l-.6 2 2.3-1.2c.8.2 1.6.3 2.4.3h.5a5 5 0 0 1-.2-1.4c0-2.9 2.8-5.2 6.2-5.2h.5C15 5.2 12.2 3 8.7 3z"/><path d="M22 12.9c0-2.5-2.5-4.6-5.5-4.6s-5.5 2-5.5 4.6 2.5 4.6 5.5 4.6c.6 0 1.2-.1 1.8-.2l2 1-.5-1.7c1.3-.9 2.2-2.2 2.2-3.7z"/></svg>
+          扫码后手机端确认
+        </div>
+      </div>
+    </div>
+
+    <!-- 邮箱 -->
+    <div class="pane" data-pane="mail">
+      <div class="field">
+        <label>邮箱</label>
+        <input class="ipt" placeholder="you@company.com">
+      </div>
+      <div class="field">
+        <label>密码</label>
+        <input class="ipt" type="password" placeholder="至少 8 位">
+      </div>
+      <button class="submit" onclick="location.href='studio.html'">登录</button>
+      <div class="alt">还没有账号？<a href="#">立即注册</a></div>
+    </div>
+  </div>
+
+  <div class="legal">
+    继续即表示同意 <a href="#">服务条款</a> 与 <a href="#">隐私政策</a>
+  </div>
+
+  <div class="foot-note">合奏 ENSEMBLE · v1.0</div>
+</div>
+
+<script>
+(function(){
+  const seg = document.getElementById('seg');
+  const panes = document.querySelectorAll('.pane');
+  seg.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if(!b) return;
+    seg.querySelectorAll('button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    panes.forEach(p => p.classList.toggle('on', p.dataset.pane === b.dataset.p));
+  });
+
+  const btn = document.getElementById('codeBtn');
+  let t = 0, timer = null;
+  btn.addEventListener('click', () => {
+    if(timer) return;
+    t = 60;
+    btn.disabled = true;
+    btn.textContent = t + 's 后重发';
+    timer = setInterval(() => {
+      t--;
+      if(t <= 0){ clearInterval(timer); timer = null; btn.disabled = false; btn.textContent = '获取验证码'; }
+      else btn.textContent = t + 's 后重发';
+    }, 1000);
+  });
+})();
+</script>
+</body>
+</html>

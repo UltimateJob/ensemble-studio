@@ -1,0 +1,272 @@
+/* ============================================================
+   合奏 Ensemble — Design Tokens v11 (Liquid Glass)
+   四套主题，靠 data-theme 切换。默认 aurora。
+   ============================================================ */
+
+/* ---------------- A. 极光 Aurora ---------------- */
+:root, [data-theme="aurora"]{
+  --bg-solid: #F2F5FF;
+  --glow-1: rgba(112,155,255,.46);
+  --glow-2: rgba(178,136,255,.36);
+  --glow-3: rgba(120,210,255,.26);
+
+  --brand:   #4F6EF7;
+  --brand-2: #7C6BF5;
+  --accent:  #6D5CF0;
+  --accent-soft: rgba(109,92,240,.10);
+
+  --ink-on-brand: #FFFFFF;
+  --glass:    rgba(255,255,255,.86);
+  --glass-2:  rgba(255,255,255,.46);
+  --glass-3:  rgba(255,255,255,.28);
+  --glass-line: rgba(255,255,255,.88);
+  --glass-line-2: rgba(255,255,255,.52);
+  --glass-sh: 0 14px 40px -16px rgba(62,86,170,.26);
+  --glass-sh-hover: 0 22px 54px -18px rgba(62,86,170,.34);
+}
+
+/* ---------------- B. 晨曦 Sunrise ---------------- */
+[data-theme="sunrise"]{
+  --bg-solid: #FFF7F2;
+  --glow-1: rgba(255,168,126,.48);
+  --glow-2: rgba(255,146,178,.34);
+  --glow-3: rgba(255,214,150,.30);
+
+  --brand:   #E85A2C;
+  --brand-2: #F0813F;
+  --accent:  #D94F2A;
+  --accent-soft: rgba(217,79,42,.10);
+
+  --ink-on-brand: #FFFFFF;
+  --glass:    rgba(255,255,255,.88);
+  --glass-2:  rgba(255,255,255,.48);
+  --glass-3:  rgba(255,255,255,.30);
+  --glass-line: rgba(255,255,255,.90);
+  --glass-line-2: rgba(255,255,255,.56);
+  --glass-sh: 0 14px 40px -16px rgba(190,110,70,.24);
+  --glass-sh-hover: 0 22px 54px -18px rgba(190,110,70,.32);
+}
+
+/* ---------------- C. 薄荷 Mint ---------------- */
+[data-theme="mint"]{
+  --bg-solid: #F1FBF8;
+  --glow-1: rgba(110,226,196,.46);
+  --glow-2: rgba(110,196,245,.34);
+  --glow-3: rgba(190,255,230,.32);
+
+  --brand:   #009E86;
+  --brand-2: #22B79D;
+  --accent:  #0E8F79;
+  --accent-soft: rgba(14,143,121,.10);
+
+  --ink-on-brand: #FFFFFF;
+  --glass:    rgba(255,255,255,.86);
+  --glass-2:  rgba(255,255,255,.46);
+  --glass-3:  rgba(255,255,255,.28);
+  --glass-line: rgba(255,255,255,.88);
+  --glass-line-2: rgba(255,255,255,.54);
+  --glass-sh: 0 14px 40px -16px rgba(50,140,125,.22);
+  --glass-sh-hover: 0 22px 54px -18px rgba(50,140,125,.30);
+}
+
+/* ---------------- D. 珠光 Pearl（黑白灰 + 微光） ---------------- */
+[data-theme="pearl"]{
+  --bg-solid: #F3F4F7;
+  --glow-1: rgba(196,202,222,.46);
+  --glow-2: rgba(226,220,210,.38);
+  --glow-3: rgba(248,249,252,.55);
+
+  --brand:   #16161A;
+  --brand-2: #30303A;
+  --accent:  #3A3A44;
+  --accent-soft: rgba(22,22,26,.06);
+
+  --ink-on-brand: #FFFFFF;
+
+  /* 卡片接近纯白，边框是实灰线 —— 不再靠白色高光撑结构 */
+  --glass:    rgba(255,255,255,.97);
+  --glass-2:  rgba(255,255,255,.78);
+  --glass-3:  rgba(255,255,255,.52);
+  --glass-line:   #E3E3E9;
+  --glass-line-2: #D6D6DE;
+  --glass-sh:       0 1px 2px rgba(18,18,26,.04), 0 14px 34px -18px rgba(18,18,26,.22);
+  --glass-sh-hover: 0 2px 5px rgba(18,18,26,.06), 0 24px 50px -20px rgba(18,18,26,.30);
+
+  /* 文字压深，拉开明暗 */
+  --tx:   #0D0D10;
+  --tx-2: #47474F;
+  --tx-3: #77777F;
+  --tx-4: #A5A5AE;
+
+  --line:   #E7E7EC;
+  --line-2: #D9D9E1;
+  --line-3: #C2C2CC;
+
+  /* 兼容旧页面的变量名 */
+  --bg:      var(--bg-solid);
+  --panel:   var(--glass);
+  --panel-2: rgba(255,255,255,.55);
+  --panel-3: rgba(120,130,170,.07);
+  --sh-1:    0 1px 2px rgba(20,20,30,.04);
+  --sh-2:    0 4px 14px rgba(20,20,30,.06);
+  --sh-3:    0 16px 40px -14px rgba(20,20,30,.20);
+  --ok:      var(--green);
+  --bad:     var(--rose);
+  --bad-dim: var(--rose-soft);
+  --bad-line:var(--rose-line);
+  --warn:    var(--amber);
+
+  --role:   #E3E3EB;
+  --role-tx:#494952;
+}
+
+/* 珠光下，卡片的"凸起"靠极细白线 + 实灰边 */
+[data-theme="pearl"] .avatar{
+  border-color:rgba(20,20,30,.07);
+  box-shadow:none;
+  background:var(--role);
+}
+[data-theme="pearl"] .glass{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,1),
+    inset 0 -1px 0 rgba(0,0,0,.02),
+    var(--glass-sh);
+}
+[data-theme="pearl"] .glass::before{
+  background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0) 100%);
+  opacity:.6;
+}
+
+/* ============================================================
+   共用
+   ============================================================ */
+:root{
+  --tx:   #1B1E2B;
+  --tx-2: #565C70;
+  --tx-3: #868CA0;
+  --tx-4: #B3B8C8;
+
+  --line:   rgba(120,130,170,.14);
+  --line-2: rgba(120,130,170,.22);
+  --line-3: rgba(120,130,170,.34);
+
+  --rose:   #C8443C;
+  --rose-soft: rgba(200,68,60,.08);
+  --rose-line: rgba(200,68,60,.20);
+
+  --green:  #2E8B62;
+  --green-soft: rgba(46,139,98,.09);
+  --green-line: rgba(46,139,98,.20);
+
+  --amber:  #B4761A;
+  --amber-soft: rgba(180,118,26,.10);
+
+  --role:   #E4E8F3;
+  --role-tx:#535A70;
+
+  --r-sm: 9px;
+  --r:    12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC",
+          "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --mono: "SF Mono", ui-monospace, Menlo, monospace;
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+/* 字号阶：7 档，没有 15/17/19 */
+:root{
+  --fs-1: 11px;
+  --fs-2: 12px;
+  --fs-3: 13px;
+  --fs-4: 14px;
+  --fs-5: 16px;
+  --fs-6: 20px;
+  --fs-7: 28px;
+  --fs-8: 34px;
+}
+
+/* 键盘可达性：所有可交互元素统一 focus 环 */
+:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:2px;
+}
+
+html,body{
+  height:100%;
+  color:var(--tx);
+  font-family:var(--font);
+  font-size:13px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* 光晕背景 —— 琉璃的底座 */
+body{
+  background:
+    radial-gradient(72% 62% at 10% -6%,  var(--glow-1), transparent 66%),
+    radial-gradient(66% 58% at 96% 100%, var(--glow-2), transparent 66%),
+    radial-gradient(64% 56% at 56% 42%,  var(--glow-3), transparent 72%),
+    radial-gradient(80% 70% at 50% 110%, var(--glow-1), transparent 70%),
+    var(--bg-solid);
+  background-attachment: fixed;
+}
+
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+input,textarea{ font:inherit; color:inherit; background:none; border:0; outline:none; }
+ul{ list-style:none; }
+a{ color:inherit; text-decoration:none; }
+
+::-webkit-scrollbar{ width:8px; height:8px; }
+::-webkit-scrollbar-track{ background:transparent; }
+::-webkit-scrollbar-thumb{ background:rgba(120,130,170,.18); border-radius:99px; }
+::-webkit-scrollbar-thumb:hover{ background:rgba(120,130,170,.3); }
+
+.mono{ font-family:var(--mono); font-variant-numeric:tabular-nums; }
+.ell{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.grow{ flex:1; min-width:0; }
+
+/* ---------- 琉璃卡片 ---------- */
+.glass{
+  position:relative;
+  background:var(--glass);
+  backdrop-filter:blur(18px) saturate(150%);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  border:1px solid var(--glass-line);
+  border-radius:var(--r-lg);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(255,255,255,.32),
+    var(--glass-sh);
+}
+/* 顶部高光：玻璃"凸起"的关键 */
+.glass::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:56%;
+  border-radius:inherit;
+  background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 100%);
+  pointer-events:none;
+}
+.glass > *{ position:relative; }
+
+/* 头像 */
+.avatar{
+  flex:0 0 auto;
+  width:26px; height:26px;
+  border-radius:50%;
+  display:grid; place-items:center;
+  font-size:11px; font-weight:600;
+  background:var(--role);
+  color:var(--role-tx);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+  letter-spacing:0;
+}
+.avatar.sm{ width:22px; height:22px; font-size:10px; }
+.avatar.me{ background:linear-gradient(160deg,var(--brand),var(--brand-2)); color:var(--ink-on-brand); border-color:transparent; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.001s !important; transition-duration:.001s !important; }
+}

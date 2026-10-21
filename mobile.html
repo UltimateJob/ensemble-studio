@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>合奏 · 移动端</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+body{
+  background:#F2F2F2;
+  padding:40px 28px;
+  display:flex; gap:24px; justify-content:center; align-items:flex-start;
+  min-height:100vh;
+}
+.stage{ display:flex; gap:24px; }
+.slot{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+.slot-label{
+  font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--tx-4); font-weight:500;
+}
+
+/* 机身 */
+.phone{
+  width:344px; height:744px;
+  border-radius:42px; padding:8px;
+  background:linear-gradient(170deg,#F4F4F5,#D9D9DC 52%,#EDEDEF);
+  box-shadow:0 0 0 1px rgba(0,0,0,.07), 0 24px 50px rgba(0,0,0,.13);
+  position:relative;
+}
+.screen{
+  width:100%; height:100%;
+  border-radius:35px; overflow:hidden;
+  background:#fff;
+  display:flex; flex-direction:column;
+  position:relative;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);
+}
+.island{
+  position:absolute; top:8px; left:50%; transform:translateX(-50%);
+  width:92px; height:23px; border-radius:99px; background:#000; z-index:60;
+}
+.sbar{
+  flex:0 0 42px; display:flex; align-items:flex-end; justify-content:space-between;
+  padding:0 20px 4px; font-size:11.5px; font-weight:600; color:var(--tx); z-index:50;
+}
+.sb-r{ display:flex; align-items:center; gap:4px; }
+.sb-r svg{ opacity:.8 }
+
+/* 应用栏 */
+.ab{
+  flex:0 0 42px; display:flex; align-items:center; gap:8px;
+  padding:0 14px; border-bottom:1px solid var(--line); background:#fff; z-index:40;
+}
+.ab .bk{ color:var(--tx-3); display:grid; place-items:center; width:18px; }
+.ab-t{ font-size:13px; font-weight:600; color:var(--tx); }
+.ab-s{ font-size:9.5px; color:var(--tx-4); margin-top:-1px; }
+.ab-r{ margin-left:auto; color:var(--tx-4); }
+
+/* 内容 */
+.ct{
+  flex:1; overflow-y:auto; min-height:0; display:flex; flex-direction:column;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0, #000 12px);
+          mask-image:linear-gradient(to bottom, transparent 0, #000 12px);
+}
+.ct::-webkit-scrollbar{ width:0; }
+
+/* 消息 */
+.chat{ padding:12px 14px 6px; margin-top:auto; }
+.m{ display:flex; gap:8px; margin-bottom:14px; }
+.m-b{ min-width:0; flex:1; }
+.m-h{ display:flex; align-items:baseline; gap:6px; margin-bottom:3px; }
+.m-n{ font-size:11px; font-weight:600; color:var(--tx); }
+.m-t{ font-size:9px; color:var(--tx-4); font-family:var(--mono); }
+.m-x{ font-size:11.5px; color:var(--tx-2); line-height:1.6; }
+.m-x b{ color:var(--tx); }
+
+.m.me{ flex-direction:row-reverse; }
+.m.me .m-b{ display:flex; flex-direction:column; align-items:flex-end; }
+.m.me .m-h{ justify-content:flex-end; }
+.m.me .m-x{
+  background:var(--panel-2); padding:7px 10px;
+  border-radius:9px 9px 3px 9px; color:var(--tx);
+}
+
+/* 文件行 */
+.f{
+  display:flex; align-items:center; gap:8px;
+  margin-top:7px; padding:7px 9px;
+  border:1px solid var(--line); border-radius:7px;
+}
+.f-ic{
+  width:22px; height:22px; border-radius:5px; flex:0 0 22px;
+  background:var(--panel-3); display:grid; place-items:center;
+  font-size:7.5px; font-weight:600; color:var(--tx-3);
+}
+.f-n{ font-size:10.5px; font-weight:500; color:var(--tx); }
+.f-s{ font-size:9px; color:var(--tx-4); margin-top:1px; }
+
+/* 风险 */
+.risk{
+  margin-top:8px; border:1px solid var(--bad-line); border-radius:7px;
+  background:var(--bad-dim); overflow:hidden;
+}
+.risk-h{
+  padding:6px 9px; font-size:10px; font-weight:600; color:var(--bad);
+  border-bottom:1px solid var(--bad-line);
+}
+.risk-i{
+  display:flex; gap:6px; padding:6px 9px;
+  font-size:10px; color:var(--tx-2);
+}
+.risk-i + .risk-i{ border-top:1px solid rgba(217,59,59,.09); }
+.risk-i .k{ font-size:9px; color:var(--bad); font-weight:600; flex:0 0 auto; }
+
+/* 行动 */
+.act{
+  margin-top:8px; padding:10px;
+  border:1px solid var(--line); border-radius:9px;
+}
+.act .t{ font-size:11px; font-weight:600; color:var(--tx); }
+.act .s{ font-size:9.5px; color:var(--tx-3); margin-top:2px; }
+.act .row{ display:flex; gap:6px; margin-top:9px; }
+.act button{ flex:1; height:30px; border-radius:7px; font-size:10.5px; font-weight:500; }
+.b2{ border:1px solid var(--line-2); color:var(--tx-2); background:#fff; }
+.b1{ background:var(--brand); color:#fff; }
+
+/* 输入 */
+.cm{
+  flex:0 0 auto; padding:8px 12px 10px;
+  border-top:1px solid var(--line); background:#fff;
+}
+.ib{
+  display:flex; align-items:center; gap:8px;
+  height:34px; padding:0 6px 0 11px;
+  border:1px solid var(--line-2); border-radius:9px;
+  font-size:11px; color:var(--tx-4);
+}
+.ib .sd{
+  width:24px; height:24px; border-radius:6px; background:var(--brand);
+  display:grid; place-items:center; color:#fff; flex:0 0 24px;
+}
+.home{
+  position:absolute; bottom:6px; left:50%; transform:translateX(-50%);
+  width:100px; height:4px; border-radius:99px; background:rgba(0,0,0,.18); z-index:70;
+}
+
+/* 锁屏 */
+.lock{
+  flex:1; display:flex; flex-direction:column;
+  background:linear-gradient(180deg,#F7F8FA,#FBFBFC 60%,#FDFDFD);
+  padding:0 12px;
+}
+.lt{ text-align:center; margin-top:16px; }
+.lt .h{ font-size:56px; font-weight:300; letter-spacing:-.04em; line-height:1; color:#111; font-variant-numeric:tabular-nums; }
+.ld{ text-align:center; font-size:9.5px; color:var(--tx-3); margin-top:12px; }
+
+.nt{
+  margin-top:14px; padding:10px 11px;
+  border-radius:13px; background:rgba(255,255,255,.9);
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+}
+.nt + .nt{ margin-top:7px; }
+.nt-h{ display:flex; align-items:center; gap:5px; margin-bottom:4px; }
+.nt-a{
+  width:15px; height:15px; border-radius:4px;
+  background:#141414; color:#fff;
+  display:grid; place-items:center; font-size:7.5px; font-weight:600;
+}
+.nt-n{ font-size:8.5px; font-weight:600; letter-spacing:.03em; color:var(--tx-3); }
+.nt-t2{ margin-left:auto; font-size:8px; color:var(--tx-4); }
+.nt-t{ font-size:11px; font-weight:600; color:var(--tx); }
+.nt-b{ font-size:10px; color:var(--tx-2); line-height:1.5; margin-top:2px; }
+
+.lf{ margin-top:auto; padding-bottom:24px; text-align:center; }
+.lf .hint{ font-size:9px; color:var(--tx-4); margin-bottom:7px; }
+.lf .bar{ width:100px; height:4px; border-radius:99px; background:rgba(0,0,0,.2); margin:0 auto; }
+
+/* 审批 */
+.ap-h{ padding:14px 14px 12px; border-bottom:1px solid var(--line); }
+.ap-b{ font-size:9px; font-weight:600; color:var(--brand); letter-spacing:.05em; }
+.ap-h1{ font-size:15px; font-weight:600; margin-top:7px; letter-spacing:-.01em; }
+.ap-h2{ font-size:10px; color:var(--tx-3); margin-top:3px; }
+
+.diff{ padding:12px 14px; }
+.dh{ font-size:9px; font-weight:600; letter-spacing:.1em; color:var(--tx-4); text-transform:uppercase; margin-bottom:8px; }
+.dc{
+  padding:9px 10px; border:1px solid var(--line); border-radius:8px; margin-bottom:6px;
+}
+.dc.ok{ border-color:#DCEBE2; background:#F8FCF9; }
+.dc.warn{ border-color:#F1E3CF; background:#FFFAF2; }
+.dc-t{ display:flex; align-items:center; gap:6px; }
+.dc-c{ font-family:var(--mono); font-size:9px; color:var(--tx-4); }
+.dc-n{ font-size:10.5px; font-weight:500; color:var(--tx); flex:1; }
+.dc-s{ font-size:8px; font-weight:600; padding:1px 5px; border-radius:99px; }
+.dc-s.ok{ color:var(--ok); background:rgba(59,122,87,.09); }
+.dc-s.warn{ color:#C77B21; background:rgba(199,123,33,.10); }
+.dc-x{ font-size:9.5px; color:var(--tx-3); line-height:1.55; margin-top:5px; }
+.dc-x .rm{ color:var(--bad); text-decoration:line-through; opacity:.65; }
+.dc-x .ad{ color:var(--ok); }
+
+.ap-f{
+  flex:0 0 auto; padding:9px 14px 20px;
+  border-top:1px solid var(--line); display:flex; gap:7px;
+}
+.ap-f button{ height:42px; border-radius:10px; font-size:12px; font-weight:500; }
+.ap-f .no{ flex:0 0 84px; border:1px solid var(--line-2); color:var(--tx-2); background:#fff; }
+.ap-f .yes{ flex:1; background:var(--brand); color:#fff; }
+
+/* 产物 */
+.ph{ padding:13px 14px 10px; }
+.ph-t{ font-size:14px; font-weight:600; letter-spacing:-.01em; }
+.ph-s{ font-size:9.5px; color:var(--tx-4); margin-top:3px; }
+
+.list{ padding:0 14px 12px; }
+.li{
+  display:flex; gap:8px; padding:8px 9px;
+  border:1px solid var(--line); border-radius:7px; margin-bottom:5px;
+}
+.li .i{ font-family:var(--mono); font-size:9px; color:var(--tx-4); flex:0 0 14px; padding-top:1px; }
+.li .b{ flex:1; min-width:0; }
+.li .r{ font-size:10.5px; color:var(--tx); line-height:1.45; }
+.li .m{ font-size:8.5px; color:var(--tx-4); margin-top:2px; }
+.li.warn{ border-color:#F1E3CF; background:#FFFAF2; }
+
+.stats{
+  margin:0 14px 14px; padding:11px;
+  border:1px solid var(--line); border-radius:9px;
+}
+.st{ display:flex; align-items:center; font-size:9.5px; color:var(--tx-3); }
+.st + .st{ margin-top:7px; }
+.st .v{ margin-left:auto; font-family:var(--mono); font-size:10.5px; font-weight:500; color:var(--tx); }
+
+.tb{
+  flex:0 0 auto; height:52px; display:flex;
+  border-top:1px solid var(--line); background:#fff; padding-bottom:6px;
+}
+.tb div{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; color:var(--tx-4); }
+.tb div.on{ color:var(--tx); }
+.tb span{ font-size:8px; font-weight:500; }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- 屏 1：群聊 -->
+  <div class="slot">
+    <div class="slot-label">群聊</div>
+    <div class="phone">
+      <div class="island"></div>
+      <div class="screen">
+        <div class="sbar"><span>14:31</span><span class="sb-r">
+          <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"/><rect x="4.3" y="6" width="3" height="6" rx="1"/><rect x="8.6" y="3.5" width="3" height="8.5" rx="1"/><rect x="13" y="1" width="3" height="11" rx="1" opacity=".35"/></svg>
+          <svg width="20" height="10" viewBox="0 0 24 12" fill="none"><rect x=".5" y=".5" width="20" height="11" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="13" height="8" rx="2" fill="currentColor"/></svg>
+        </span></div>
+
+        <div class="ab">
+          <span class="bk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg></span>
+          <div><div class="ab-t">标书攻坚组</div><div class="ab-s">5 Agent · 飞书同步</div></div>
+          <span class="ab-r"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></span>
+        </div>
+
+        <div class="ct">
+          <div class="chat">
+            <div class="m">
+              <div class="avatar sm">工</div>
+              <div class="m-b"><div class="m-h"><span class="m-n">工头</span><span class="m-t">13:49</span></div>
+                <div class="m-x">拆 4 步，45 分钟。到点汇报。</div></div>
+            </div>
+
+            <div class="m">
+              <div class="avatar sm">查</div>
+              <div class="m-b"><div class="m-h"><span class="m-n">查证</span><span class="m-t">13:56</span></div>
+                <div class="m-x">47 条要求，<b>12 条硬性</b>。</div>
+                <div class="f"><div class="f-ic">JSON</div><div><div class="f-n">01_合规条目表</div><div class="f-s">47 条</div></div></div>
+              </div>
+            </div>
+
+            <div class="m">
+              <div class="avatar sm">审</div>
+              <div class="m-b"><div class="m-h"><span class="m-n">审校</span><span class="m-t">14:19</span></div>
+                <div class="m-x">3 处会废标：</div>
+                <div class="risk">
+                  <div class="risk-h">3 处废标风险</div>
+                  <div class="risk-i"><span class="k">未响应</span><span>ISO 27001 认证</span></div>
+                  <div class="risk-i"><span class="k">不满足</span><span>三甲案例需 ≥ 3</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="m me">
+              <div class="avatar sm me">林</div>
+              <div class="m-b"><div class="m-h"><span class="m-n">你</span><span class="m-t">14:21</span></div>
+                <div class="m-x">ISO 在资质库，直接引。</div></div>
+            </div>
+
+            <div class="m">
+              <div class="avatar sm">交</div>
+              <div class="m-b"><div class="m-h"><span class="m-n">交付</span><span class="m-t">14:31</span></div>
+                <div class="m-x">组好了，等你确认。</div>
+                <div class="act">
+                  <div class="t">投标包 · 4 个文件</div>
+                  <div class="s">剩 1 条待补</div>
+                  <div class="row"><button class="b2">打回</button><button class="b1">通过</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cm">
+          <div class="ib">说点什么，或 @ 某个 Agent…<span class="sd" style="margin-left:auto"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 7-7 7 7M12 19V5"/></svg></span></div>
+        </div>
+        <div class="home"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 屏 2：锁屏 -->
+  <div class="slot">
+    <div class="slot-label">推送</div>
+    <div class="phone">
+      <div class="island"></div>
+      <div class="screen">
+        <div class="sbar"><span>14:31</span><span class="sb-r">
+          <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"/><rect x="4.3" y="6" width="3" height="6" rx="1"/><rect x="8.6" y="3.5" width="3" height="8.5" rx="1"/><rect x="13" y="1" width="3" height="11" rx="1" opacity=".35"/></svg>
+          <svg width="20" height="10" viewBox="0 0 24 12" fill="none"><rect x=".5" y=".5" width="20" height="11" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="13" height="8" rx="2" fill="currentColor"/></svg>
+        </span></div>
+
+        <div class="lock">
+          <div class="lt"><div class="h">14:31</div></div>
+          <div class="ld">10月21日 星期二</div>
+
+          <div class="nt">
+            <div class="nt-h"><div class="nt-a">合</div><span class="nt-n">合奏</span><span class="nt-t2">现在</span></div>
+            <div class="nt-t">标书攻坚组 · 41 分钟完成</div>
+            <div class="nt-b">投标包已生成 4 个文件。审校修完 2 处，剩 1 条待补。</div>
+          </div>
+
+          <div class="nt">
+            <div class="nt-h"><div class="nt-a" style="background:#D93B3B">审</div><span class="nt-n">审校</span><span class="nt-t2">7 分钟前</span></div>
+            <div class="nt-b">你的应答里 <b style="color:var(--bad)">ISO 27001</b> 未响应，按 3.2.4 会直接废标。</div>
+          </div>
+
+          <div class="lf">
+            <div class="hint">上滑查看</div>
+            <div class="bar"></div>
+          </div>
+        </div>
+        <div class="home"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 屏 3：审批 -->
+  <div class="slot">
+    <div class="slot-label">审批</div>
+    <div class="phone">
+      <div class="island"></div>
+      <div class="screen">
+        <div class="sbar"><span>14:32</span><span class="sb-r">
+          <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"/><rect x="4.3" y="6" width="3" height="6" rx="1"/><rect x="8.6" y="3.5" width="3" height="8.5" rx="1"/><rect x="13" y="1" width="3" height="11" rx="1" opacity=".35"/></svg>
+          <svg width="20" height="10" viewBox="0 0 24 12" fill="none"><rect x=".5" y=".5" width="20" height="11" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="13" height="8" rx="2" fill="currentColor"/></svg>
+        </span></div>
+
+        <div class="ab">
+          <span class="bk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg></span>
+          <div class="ab-t">审批</div>
+        </div>
+
+        <div class="ct">
+          <div class="ap-h">
+            <div class="ap-b">待你确认</div>
+            <div class="ap-h1">华东医院 · 投标包</div>
+            <div class="ap-h2">41 分钟 · 47 条已核 · 硬性 12/12</div>
+          </div>
+
+          <div class="diff">
+            <div class="dh">审校改了什么</div>
+
+            <div class="dc ok">
+              <div class="dc-t"><span class="dc-c">3.2.4</span><span class="dc-n">ISO 27001</span><span class="dc-s ok">已修</span></div>
+              <div class="dc-x"><span class="rm">未提及</span> → <span class="ad">引用资质库证书，附扫描件</span></div>
+            </div>
+
+            <div class="dc ok">
+              <div class="dc-t"><span class="dc-c">3.1.2</span><span class="dc-n">三甲案例 ≥ 3</span><span class="dc-s ok">已修</span></div>
+              <div class="dc-x"><span class="rm">2 个</span> → <span class="ad">补苏州分院，现 3 个</span></div>
+            </div>
+
+            <div class="dc warn">
+              <div class="dc-t"><span class="dc-c">4.5.1</span><span class="dc-n">国产化信创</span><span class="dc-s warn">待补</span></div>
+              <div class="dc-x">缺适配清单。不补扣 2–4 分，不废标。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ap-f">
+          <button class="no">先补</button>
+          <button class="yes">确认并导出</button>
+        </div>
+        <div class="home"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 屏 4：产物 -->
+  <div class="slot">
+    <div class="slot-label">产物</div>
+    <div class="phone">
+      <div class="island"></div>
+      <div class="screen">
+        <div class="sbar"><span>14:33</span><span class="sb-r">
+          <svg width="14" height="10" viewBox="0 0 16 12" fill="currentColor"><rect y="8" width="3" height="4" rx="1"/><rect x="4.3" y="6" width="3" height="6" rx="1"/><rect x="8.6" y="3.5" width="3" height="8.5" rx="1"/><rect x="13" y="1" width="3" height="11" rx="1" opacity=".35"/></svg>
+          <svg width="20" height="10" viewBox="0 0 24 12" fill="none"><rect x=".5" y=".5" width="20" height="11" rx="3.5" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="13" height="8" rx="2" fill="currentColor"/></svg>
+        </span></div>
+
+        <div class="ab">
+          <span class="bk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg></span>
+          <div class="ab-t">合规点对表</div>
+        </div>
+
+        <div class="ct">
+          <div class="ph">
+            <div class="ph-t">47 条要求</div>
+            <div class="ph-s">硬性 12/12 · 溯源 96% · 1 条待补</div>
+          </div>
+
+          <div class="list">
+            <div class="li"><span class="i">01</span><div class="b"><div class="r">ISO 27001 认证</div><div class="m">已响应 · P47</div></div></div>
+            <div class="li"><span class="i">02</span><div class="b"><div class="r">三甲案例 ≥ 3</div><div class="m">已响应 · 3 个案例</div></div></div>
+            <div class="li warn"><span class="i">03</span><div class="b"><div class="r">国产化信创</div><div class="m">待补适配清单</div></div></div>
+            <div class="li"><span class="i">04</span><div class="b"><div class="r">运维响应 ≤ 2h</div><div class="m">已响应 · P24</div></div></div>
+            <div class="li"><span class="i">05</span><div class="b"><div class="r">等保三级报告</div><div class="m">已响应 · P31</div></div></div>
+          </div>
+
+          <div class="stats">
+            <div class="st"><span>解析</span><span class="v">3m 12s</span></div>
+            <div class="st"><span>撰写 + 审校</span><span class="v">34m 40s</span></div>
+            <div class="st"><span>人工等效</span><span class="v" style="color:var(--tx-4);text-decoration:line-through">3 天</span></div>
+            <div class="st" style="padding-top:7px;border-top:1px solid var(--line)"><span>成本</span><span class="v">¥6.8</span></div>
+          </div>
+        </div>
+
+        <div class="tb">
+          <div class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h6l2 3h8v13H4z"/></svg><span>产物</span></div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>群聊</span></div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg><span>我</span></div>
+        </div>
+        <div class="home"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
