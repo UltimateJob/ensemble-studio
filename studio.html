@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>群聊 · 合奏</title>
 <link rel="stylesheet" href="tokens.css">
 <style>body{ background-attachment:fixed; }
@@ -81,12 +82,12 @@
 /* ================= 主区 ================= */
 .main{ max-width:1120px; margin:0 auto; padding:46px 40px 60px; }
 
-.head{ display:flex; align-items:flex-end; gap:20px; }
+.head{ display:flex; align-items:flex-end; gap:20px; flex-wrap:wrap; }
 .head h1{
   font-size:28px; font-weight:600; letter-spacing:-.035em;
 }
 .head p{ margin-top:8px; font-size:13px; color:var(--tx-3); }
-.head-r{ margin-left:auto; display:flex; gap:9px; }
+.head-r{ margin-left:auto; display:flex; gap:9px; flex-wrap:wrap; }
 
 .btn{
   display:inline-flex; align-items:center; gap:6px;
@@ -256,6 +257,111 @@
 .act:hover{ background:rgba(255,255,255,.55); }
 .act .avatar{ width:22px; height:22px; font-size:11px; }
 .act .t{ margin-left:auto; font-size:10px; color:var(--tx-4); font-family:var(--mono); }
+
+/* ================= 空 / 载入 / 错误 ================= */
+.state{ display:none; }
+.state.on{ display:block; }
+
+.empty{
+  margin-top:36px;
+  border:1px dashed var(--line-2);
+  border-radius:16px;
+  padding:56px 40px;
+  text-align:center;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+.empty-ic{
+  width:54px; height:54px; border-radius:50%;
+  background:#fff; border:1px solid var(--line);
+  display:grid; place-items:center; margin:0 auto 20px;
+  color:var(--tx-3);
+  box-shadow:0 4px 14px -6px rgba(20,20,30,.14);
+}
+.empty h2{ font-size:19px; font-weight:600; letter-spacing:-.02em; }
+.empty p{ margin-top:9px; font-size:13px; color:var(--tx-3); }
+.tpl-row{
+  display:flex; gap:10px; justify-content:center;
+  margin-top:28px; flex-wrap:wrap;
+}
+.tpl-btn{
+  display:flex; align-items:center; gap:9px;
+  height:44px; padding:0 16px;
+  border-radius:12px; border:1px solid var(--line-2);
+  background:#fff; font-size:13px; color:var(--tx-2);
+  transition:all .18s;
+}
+.tpl-btn:hover{ border-color:var(--tx-4); transform:translateY(-2px); box-shadow:0 10px 24px -14px rgba(20,20,30,.3); }
+.tpl-btn i{
+  width:26px; height:26px; border-radius:7px;
+  background:var(--panel-3); display:grid; place-items:center;
+  font-size:10px; font-weight:600; font-style:normal; color:var(--tx-2);
+}
+.empty-foot{ margin-top:26px; font-size:12px; color:var(--tx-4); }
+.empty-foot a{ color:var(--tx); border-bottom:1px solid var(--line-2); }
+
+/* 骨架 */
+.sk{
+  height:98px; border-radius:16px; margin-bottom:12px;
+  background:rgba(255,255,255,.7);
+  border:1px solid var(--line);
+  position:relative; overflow:hidden;
+}
+.sk::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+  transform:translateX(-100%);
+  animation:shimmer 1.4s infinite;
+}
+@keyframes shimmer{ to{ transform:translateX(100%) } }
+.sk-side{ height:260px; border-radius:16px; background:rgba(255,255,255,.7); border:1px solid var(--line); position:relative; overflow:hidden; }
+.sk-side::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+  transform:translateX(-100%);
+  animation:shimmer 1.4s infinite .2s;
+}
+
+/* 错误 */
+.err{
+  margin-top:36px; text-align:center;
+  padding:60px 40px;
+  border-radius:16px;
+  border:1px solid var(--rose-line);
+  background:rgba(255,255,255,.6);
+}
+.err-ic{
+  width:48px; height:48px; border-radius:50%;
+  background:var(--rose-soft); color:var(--rose);
+  display:grid; place-items:center; margin:0 auto 18px;
+}
+.err h2{ font-size:17px; font-weight:600; }
+.err p{ margin-top:8px; font-size:12.5px; color:var(--tx-3); }
+.err-r{ margin-top:22px; display:flex; gap:9px; justify-content:center; }
+
+/* ================= 响应式 ================= */
+@media (max-width:900px){
+  .nav-in{ padding:0 20px; gap:18px; }
+  .links{ display:none; }
+  .main{ padding:28px 20px 40px; }
+  .layout{ grid-template-columns:1fr; gap:24px; }
+  .head h1{ font-size:24px; }
+}
+@media (max-width:560px){
+  .head{ flex-direction:column; align-items:flex-start; gap:16px; }
+  .head-r{ margin-left:0; width:100%; }
+  .head-r .btn{ flex:1; justify-content:center; }
+  .g{ flex-wrap:wrap; gap:10px; }
+  .g-stack{ order:3; width:100%; margin-left:36px; }
+  .g-foot{ flex:0 0 auto; }
+  .g.g-main{ padding-left:20px; }
+  .empty{ padding:44px 20px; }
+  .tpl-row{ flex-direction:column; }
+  .tpl-btn{ width:100%; justify-content:flex-start; }
+  .drawer{ width:100%; }
+  .themer{ right:16px; bottom:16px; }
+}
 
 /* ================= 抽屉 ================= */
 .mask{
@@ -454,6 +560,7 @@
     </div>
   </div>
 
+  <div class="state on" data-st="ready">
   <div class="layout">
 
     <!-- 左：群列表 -->
@@ -612,6 +719,52 @@
     </aside>
 
   </div>
+  </div>
+
+  <!-- 空态 -->
+  <div class="state" data-st="empty">
+    <div class="empty">
+      <div class="empty-ic">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l2-3.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M12 8v4M12 15h.01"/></svg>
+      </div>
+      <h2>还没有群聊</h2>
+      <p>选一个模板，30 秒开出第一个群。之后随时可以改 Agent、接飞书。</p>
+      <div class="tpl-row">
+        <button class="tpl-btn"><i>竞</i>竞标工作室</button>
+        <button class="tpl-btn"><i>码</i>代码工作室</button>
+        <button class="tpl-btn"><i>研</i>研报工作室</button>
+        <button class="tpl-btn"><i>空</i>从零开始</button>
+      </div>
+      <div class="empty-foot">或者 <a href="builder.html">先看看工作室怎么配</a></div>
+    </div>
+  </div>
+
+  <!-- 载入 -->
+  <div class="state" data-st="loading">
+    <div class="layout">
+      <div>
+        <div class="sk"></div>
+        <div class="sk"></div>
+        <div class="sk"></div>
+      </div>
+      <div class="sk-side"></div>
+    </div>
+  </div>
+
+  <!-- 错误 -->
+  <div class="state" data-st="error">
+    <div class="err">
+      <div class="err-ic">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16h.01"/></svg>
+      </div>
+      <h2>没能加载群列表</h2>
+      <p>连接超时。检查网络后重试，或稍后再来。</p>
+      <div class="err-r">
+        <button class="btn btn-dark" onclick="location.reload()">重试</button>
+        <a class="btn btn-line" href="login.html">重新登录</a>
+      </div>
+    </div>
+  </div>
 </main>
 
 <!-- 群设置抽屉 -->
@@ -672,6 +825,19 @@
 
 <script>
 (function(){
+  /* 状态：?state=empty|loading|error */
+  const st = new URLSearchParams(location.search).get('state');
+  if(st && ['empty','loading','error'].includes(st)){
+    document.querySelectorAll('.state').forEach(el => {
+      el.classList.toggle('on', el.dataset.st === st);
+    });
+    const headP = document.querySelector('.head p');
+    if(headP){
+      headP.textContent = st === 'empty' ? '还没有群聊，先开一个' :
+                           st === 'loading' ? '正在加载…' : '加载失败';
+    }
+  }
+
   /* 主题 */
   const themer = document.getElementById('themer');
   const params = new URLSearchParams(location.search);

@@ -2,10 +2,35 @@
 <html lang="zh-CN" data-theme="pearl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>标书攻坚组 · 合奏</title>
 <link rel="stylesheet" href="tokens.css">
 <style>
 body{ height:100vh; overflow:hidden; background:var(--bg); }
+
+.empty-chat{
+  flex:1; display:none; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  padding:40px;
+}
+.empty-chat.on{ display:flex; }
+.empty-chat .ic{
+  width:54px; height:54px; border-radius:50%;
+  background:#fff; border:1px solid var(--line);
+  display:grid; place-items:center; color:var(--tx-3);
+  margin-bottom:20px;
+  box-shadow:0 6px 18px -8px rgba(20,20,30,.2);
+}
+.empty-chat h2{ font-size:19px; font-weight:600; letter-spacing:-.02em; }
+.empty-chat p{ margin-top:9px; font-size:13px; color:var(--tx-3); max-width:320px; line-height:1.7; }
+.empty-chat .hints{ display:flex; gap:8px; margin-top:24px; flex-wrap:wrap; justify-content:center; }
+.empty-chat .hint{
+  height:32px; padding:0 13px; border-radius:99px;
+  border:1px solid var(--line-2); background:#fff;
+  font-size:12px; color:var(--tx-2);
+  display:inline-flex; align-items:center;
+}
+.empty-chat .hint:hover{ border-color:var(--tx-4); color:var(--tx); }
 
 .app{ height:100vh; display:flex; flex-direction:column; }
 
@@ -289,6 +314,20 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
     </div>
   </header>
 
+  <!-- 空态 -->
+  <div class="empty-chat" id="emptyChat">
+    <div class="ic">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l2-3.2A8.5 8.5 0 1 1 21 11.5z"/></svg>
+    </div>
+    <h2>群里还很安静</h2>
+    <p>说第一句话，或者 @ 某个 Agent 直接派活。它会自己拆任务、找其他人配合。</p>
+    <div class="hints">
+      <button class="hint">@工头 拆一下这个需求</button>
+      <button class="hint">把附件转成条目表</button>
+      <button class="hint">看看这个群能干什么</button>
+    </div>
+  </div>
+
   <!-- 消息 -->
   <div class="scroll" id="scroll">
     <div class="thread">
@@ -449,6 +488,12 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
 (function(){
   const scroll = document.getElementById('scroll');
   scroll.scrollTop = scroll.scrollHeight;
+
+  /* ?state=empty 演示空群 */
+  if(new URLSearchParams(location.search).get('state') === 'empty'){
+    scroll.style.display = 'none';
+    document.getElementById('emptyChat').classList.add('on');
+  }
 
   /* 产物抽屉 */
   const panel = document.getElementById('panel');
