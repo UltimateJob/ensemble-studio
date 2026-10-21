@@ -150,6 +150,27 @@
   --line-2: rgba(120,130,170,.22);
   --line-3: rgba(120,130,170,.34);
 
+  /* ---- 活力：一个主色 + 三个语义色 ---- */
+  --primary:      #4F46E5;
+  --primary-2:    #7C3AED;
+  --primary-soft: rgba(79,70,229,.08);
+  --primary-line: rgba(79,70,229,.24);
+  --grad:         linear-gradient(135deg,#4F46E5 0%,#7C3AED 100%);
+
+  --success:      #059669;
+  --success-soft: rgba(5,150,105,.09);
+  --warning:      #D97706;
+  --warning-soft: rgba(217,119,6,.11);
+  --danger:       #DC2626;
+  --danger-soft:  rgba(220,38,38,.08);
+
+  /* ---- 五个角色（低饱和底 + 深字） ---- */
+  --r-con:        #B45309; --r-con-bg:  rgba(180,83,9,.11);
+  --r-sco:        #0369A1; --r-sco-bg:  rgba(3,105,161,.11);
+  --r-scr:        #6D28D9; --r-scr-bg:  rgba(109,40,217,.11);
+  --r-aud:        #B91C1C; --r-aud-bg:  rgba(185,28,28,.11);
+  --r-cou:        #047857; --r-cou-bg:  rgba(4,120,87,.11);
+
   --rose:   #C8443C;
   --rose-soft: rgba(200,68,60,.08);
   --rose-line: rgba(200,68,60,.20);
@@ -265,7 +286,13 @@ a{ color:inherit; text-decoration:none; }
   letter-spacing:0;
 }
 .avatar.sm{ width:22px; height:22px; font-size:10px; }
-.avatar.me{ background:linear-gradient(160deg,var(--brand),var(--brand-2)); color:var(--ink-on-brand); border-color:transparent; }
+.avatar.me{ background:linear-gradient(160deg,var(--primary),var(--primary-2)); color:#fff; border-color:transparent; }
+
+.av-con{ background:var(--r-con-bg); color:var(--r-con); border-color:transparent; }
+.av-sco{ background:var(--r-sco-bg); color:var(--r-sco); border-color:transparent; }
+.av-scr{ background:var(--r-scr-bg); color:var(--r-scr); border-color:transparent; }
+.av-aud{ background:var(--r-aud-bg); color:var(--r-aud); border-color:transparent; }
+.av-cou{ background:var(--r-cou-bg); color:var(--r-cou); border-color:transparent; }
 
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.001s !important; transition-duration:.001s !important; }

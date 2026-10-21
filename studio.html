@@ -41,7 +41,7 @@
 .links a.on::after{
   content:""; position:absolute; left:0; right:0; bottom:-20px;
   height:2px; border-radius:2px;
-  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  background:var(--grad);
 }
 
 .nav-r{ margin-left:auto; display:flex; align-items:center; gap:10px; position:relative; }
@@ -96,9 +96,9 @@
   transition:all .18s;
 }
 .btn-dark{
-  background:linear-gradient(160deg,var(--brand),var(--brand-2));
-  color:var(--ink-on-brand);
-  box-shadow:0 6px 18px -6px rgba(80,110,240,.55), inset 0 1px 0 rgba(255,255,255,.4);
+  background:var(--grad);
+  color:#fff;
+  box-shadow:0 6px 18px -6px rgba(79,70,229,.55), inset 0 1px 0 rgba(255,255,255,.28);
 }
 .btn-dark:hover{ transform:translateY(-1px); box-shadow:0 10px 24px -8px rgba(80,110,240,.6); }
 .btn-line{
@@ -138,7 +138,7 @@
 .g.g-main::after{
   content:""; position:absolute; left:0; top:14px; bottom:14px;
   width:3px; border-radius:0 3px 3px 0;
-  background:linear-gradient(180deg,#16161A,#3A3A44);
+  background:var(--grad);
 }
 .g:hover{
   transform:translateY(-3px);
@@ -154,8 +154,8 @@
   width:6px; height:6px; border-radius:99px; flex:0 0 6px;
   background:var(--line-3);
 }
-.g-dot.live{ background:var(--accent); box-shadow:0 0 0 3px rgba(109,92,240,.15); }
-.g-dot.done{ background:var(--green); }
+.g-dot.live{ background:var(--success); box-shadow:0 0 0 3px rgba(5,150,105,.14); }
+.g-dot.done{ background:var(--tx-4); }
 .g-n{ font-size:14px; font-weight:600; letter-spacing:-.01em; }
 .g-more{
   margin-left:auto; width:26px; height:26px; border-radius:8px;
@@ -181,8 +181,8 @@
   display:flex; flex-direction:column; gap:5px; align-items:flex-end;
 }
 .g-state{ font-size:10px; font-weight:500; }
-.g-state.live{ color:var(--accent); }
-.g-state.done{ color:var(--green); }
+.g-state.live{ color:var(--success); }
+.g-state.done{ color:var(--tx-3); }
 
 /* 新建卡 */
 .g.new{
@@ -223,7 +223,7 @@
 }
 .quota-bar i{
   display:block; height:100%; border-radius:99px;
-  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  background:var(--grad);
 }
 
 .side-sec{
@@ -449,8 +449,8 @@
 .d-foot .save{
   flex:1; height:40px; border-radius:12px;
   background:linear-gradient(160deg,var(--brand),var(--brand-2));
-  color:var(--ink-on-brand); font-size:13px; font-weight:500;
-  box-shadow:0 6px 18px -6px rgba(80,110,240,.5), inset 0 1px 0 rgba(255,255,255,.4);
+  color:#fff; font-size:13px; font-weight:500;
+  box-shadow:0 6px 18px -6px rgba(79,70,229,.5), inset 0 1px 0 rgba(255,255,255,.24);
 }
 .d-foot .cancel{
   flex:0 0 86px; height:40px; border-radius:12px;
@@ -576,11 +576,11 @@
             </div>
             <div class="g-sub">竞标工作室 · 5 Agent · 2 外部</div>
             <div class="g-stack">
-              <div class="avatar">工</div>
-              <div class="avatar">查</div>
-              <div class="avatar">写</div>
-              <div class="avatar">审</div>
-              <div class="avatar">交</div>
+              <div class="avatar av-con">工</div>
+              <div class="avatar av-sco">查</div>
+              <div class="avatar av-scr">写</div>
+              <div class="avatar av-aud">审</div>
+              <div class="avatar av-cou">交</div>
             </div>
           </div>
           <div class="g-foot">
@@ -627,8 +627,8 @@
             <div class="g-stack">
               <div class="avatar">检</div>
               <div class="avatar">算</div>
-              <div class="avatar">写</div>
-              <div class="avatar">审</div>
+              <div class="avatar av-scr">写</div>
+              <div class="avatar av-aud">审</div>
             </div>
           </div>
           <div class="g-foot">
@@ -653,17 +653,17 @@
       <div class="acts">
         <div class="acts-h">最近活动</div>
         <div class="act">
-          <div class="avatar">审</div>
+          <div class="avatar av-aud">审</div>
           <span>审校在「标书攻坚组」发现 3 处废标风险</span>
           <span class="t">14:19</span>
         </div>
         <div class="act">
-          <div class="avatar">交</div>
+          <div class="avatar av-cou">交</div>
           <span>交付完成「华东医院_投标包_终版.zip」</span>
           <span class="t">14:31</span>
         </div>
         <div class="act">
-          <div class="avatar">写</div>
+          <div class="avatar av-scr">写</div>
           <span>撰写在「云枢重构」提交架构方案 v2</span>
           <span class="t">12:08</span>
         </div>
@@ -673,7 +673,7 @@
           <span class="t">昨天</span>
         </div>
         <div class="act">
-          <div class="avatar">工</div>
+          <div class="avatar av-con">工</div>
           <span>「宁德尽调」全部任务完成，等待验收</span>
           <span class="t">昨天</span>
         </div>
@@ -785,11 +785,11 @@
 
     <div class="d-group">
       <div class="d-label">成员 · 5 Agent</div>
-      <div class="mem"><div class="avatar">工</div><div><div class="mem-n">工头 Conductor</div><div class="mem-r">拆解 · 调度</div></div><button class="mem-x">移除</button></div>
-      <div class="mem"><div class="avatar">查</div><div><div class="mem-n">查证 Scout</div><div class="mem-r">检索 · 抽取</div></div><button class="mem-x">移除</button></div>
-      <div class="mem"><div class="avatar">写</div><div><div class="mem-n">撰写 Scribe</div><div class="mem-r">生成 · 应答</div></div><button class="mem-x">移除</button></div>
-      <div class="mem"><div class="avatar">审</div><div><div class="mem-n">审校 Auditor</div><div class="mem-r">只挑错</div></div><button class="mem-x">移除</button></div>
-      <div class="mem"><div class="avatar">交</div><div><div class="mem-n">交付 Courier</div><div class="mem-r">组包 · 推送</div></div><button class="mem-x">移除</button></div>
+      <div class="mem"><div class="avatar av-con">工</div><div><div class="mem-n">工头 Conductor</div><div class="mem-r">拆解 · 调度</div></div><button class="mem-x">移除</button></div>
+      <div class="mem"><div class="avatar av-sco">查</div><div><div class="mem-n">查证 Scout</div><div class="mem-r">检索 · 抽取</div></div><button class="mem-x">移除</button></div>
+      <div class="mem"><div class="avatar av-scr">写</div><div><div class="mem-n">撰写 Scribe</div><div class="mem-r">生成 · 应答</div></div><button class="mem-x">移除</button></div>
+      <div class="mem"><div class="avatar av-aud">审</div><div><div class="mem-n">审校 Auditor</div><div class="mem-r">只挑错</div></div><button class="mem-x">移除</button></div>
+      <div class="mem"><div class="avatar av-cou">交</div><div><div class="mem-n">交付 Courier</div><div class="mem-r">组包 · 推送</div></div><button class="mem-x">移除</button></div>
     </div>
 
     <div class="d-group">

@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="tokens.css">
 <style>
 body{
-  background:#F2F2F2;
   padding:40px 28px;
   display:flex; gap:24px; justify-content:center; align-items:flex-start;
   min-height:100vh;
@@ -97,19 +96,19 @@ body{
 
 /* 风险 */
 .risk{
-  margin-top:8px; border:1px solid var(--bad-line); border-radius:7px;
-  background:var(--bad-dim); overflow:hidden;
+  margin-top:8px; border:1px solid rgba(220,38,38,.20); border-radius:9px;
+  background:rgba(220,38,38,.055); overflow:hidden;
 }
 .risk-h{
-  padding:6px 9px; font-size:10px; font-weight:600; color:var(--bad);
-  border-bottom:1px solid var(--bad-line);
+  padding:7px 10px; font-size:10.5px; font-weight:600; color:var(--danger);
+  border-bottom:1px solid rgba(220,38,38,.14);
 }
 .risk-i{
   display:flex; gap:6px; padding:6px 9px;
   font-size:10px; color:var(--tx-2);
 }
 .risk-i + .risk-i{ border-top:1px solid rgba(217,59,59,.09); }
-.risk-i .k{ font-size:9px; color:var(--bad); font-weight:600; flex:0 0 auto; }
+.risk-i .k{ font-size:9px; color:var(--danger); font-weight:600; flex:0 0 auto; }
 
 /* 行动 */
 .act{
@@ -121,7 +120,7 @@ body{
 .act .row{ display:flex; gap:6px; margin-top:9px; }
 .act button{ flex:1; height:30px; border-radius:7px; font-size:10.5px; font-weight:500; }
 .b2{ border:1px solid var(--line-2); color:var(--tx-2); background:#fff; }
-.b1{ background:var(--brand); color:#fff; }
+.b1{ background:var(--grad); color:#fff; }
 
 /* 输入 */
 .cm{
@@ -135,7 +134,7 @@ body{
   font-size:11px; color:var(--tx-4);
 }
 .ib .sd{
-  width:24px; height:24px; border-radius:6px; background:var(--brand);
+  width:24px; height:24px; border-radius:6px; background:var(--grad);
   display:grid; place-items:center; color:#fff; flex:0 0 24px;
 }
 .home{
@@ -204,7 +203,7 @@ body{
 }
 .ap-f button{ height:42px; border-radius:10px; font-size:12px; font-weight:500; }
 .ap-f .no{ flex:0 0 84px; border:1px solid var(--line-2); color:var(--tx-2); background:#fff; }
-.ap-f .yes{ flex:1; background:var(--brand); color:#fff; }
+.ap-f .yes{ flex:1; background:var(--grad); color:#fff; }
 
 /* 产物 */
 .ph{ padding:13px 14px 10px; }

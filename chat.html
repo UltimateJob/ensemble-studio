@@ -63,7 +63,7 @@ body{ height:100vh; overflow:hidden; background:var(--bg); }
   font-size:11px; color:var(--tx-3); margin-top:1px;
   display:flex; align-items:center; gap:6px;
 }
-.g-s .d{ width:5px; height:5px; border-radius:99px; background:var(--accent); }
+.g-s .d{ width:5px; height:5px; border-radius:99px; background:var(--success); box-shadow:0 0 0 3px rgba(5,150,105,.14); }
 
 .bar-r{ margin-left:auto; display:flex; align-items:center; gap:6px; }
 .tool{
@@ -183,8 +183,8 @@ body{ height:100vh; overflow:hidden; background:var(--bg); }
   color:var(--tx-2); background:transparent;
 }
 .act-r .no:hover{ border-color:var(--line-3); color:var(--tx); }
-.act-r .yes{ flex:1; background:var(--brand); color:#F6F3EE; }
-.act-r .yes:hover{ background:#000; }
+.act-r .yes{ flex:1; background:var(--grad); color:#fff; }
+.act-r .yes:hover{ filter:brightness(1.08); }
 .act.done{ border-color:var(--green-line); background:var(--green-soft); }
 .act.done .act-t{ color:var(--green); }
 
@@ -223,11 +223,11 @@ body{ height:100vh; overflow:hidden; background:var(--bg); }
 .ta::placeholder{ color:var(--tx-4); }
 .send{
   width:32px; height:32px; flex:0 0 32px; border-radius:8px;
-  background:var(--brand); color:#F6F3EE;
+  background:var(--grad); color:#fff;
   display:grid; place-items:center;
   transition:background .15s;
 }
-.send:hover{ background:#000; }
+.send:hover{ filter:brightness(1.08); }
 
 /* ================= 产物抽屉 ================= */
 .panel{
@@ -335,7 +335,7 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
       <div class="sys">13:48 · 任务已创建 · 招标文件 186 页</div>
 
       <div class="m">
-        <div class="avatar">工</div>
+        <div class="avatar av-con">工</div>
         <div class="m-b">
           <div class="m-h"><span class="m-n">工头</span><span class="m-t">13:49</span></div>
           <div class="m-x">拆成四步：查证 → 撰写 → 审校 → 交付。预计 <b>45 分钟</b>，到点我会汇报。</div>
@@ -343,7 +343,7 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
       </div>
 
       <div class="m">
-        <div class="avatar">查</div>
+        <div class="avatar av-sco">查</div>
         <div class="m-b">
           <div class="m-h"><span class="m-n">查证</span><span class="m-t">13:56</span></div>
           <div class="m-x">186 页扫完了。抽出 <b>47 条</b>可核验要求，其中 <b>12 条是硬性资质</b>。每条都带原文页码。</div>
@@ -359,7 +359,7 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
       </div>
 
       <div class="m">
-        <div class="avatar">写</div>
+        <div class="avatar av-scr">写</div>
         <div class="m-b">
           <div class="m-h"><span class="m-n">撰写</span><span class="m-t">14:07</span></div>
           <div class="m-x">初稿 32 页，覆盖 38 条要求。每条陈述都挂到了条目编号上。</div>
@@ -375,7 +375,7 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
       </div>
 
       <div class="m">
-        <div class="avatar">审</div>
+        <div class="avatar av-aud">审</div>
         <div class="m-b">
           <div class="m-h"><span class="m-n">审校</span><span class="m-t">14:19</span></div>
           <div class="m-x">逐条对完了。<b>3 处会废标</b>，不是措辞问题，是硬伤。</div>
@@ -401,7 +401,7 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
       </div>
 
       <div class="m">
-        <div class="avatar">审</div>
+        <div class="avatar av-aud">审</div>
         <div class="m-b">
           <div class="m-h"><span class="m-n">审校</span><span class="m-t">14:26</span></div>
           <div class="m-x">已修 2 条，剩 1 条待补适配清单。风险 <b>3 → 1</b>。</div>
@@ -409,7 +409,7 @@ td.n{ font-family:var(--mono); font-size:10px; color:var(--tx-4); }
       </div>
 
       <div class="m">
-        <div class="avatar">交</div>
+        <div class="avatar av-cou">交</div>
         <div class="m-b">
           <div class="m-h"><span class="m-n">交付</span><span class="m-t">14:31</span></div>
           <div class="m-x">投标包组好了，4 个文件。等你确认才外发。</div>
