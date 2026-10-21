@@ -76,9 +76,9 @@
   --glow-2: rgba(226,220,210,.38);
   --glow-3: rgba(248,249,252,.55);
 
-  --brand:   #16161A;
-  --brand-2: #30303A;
-  --accent:  #3A3A44;
+  --brand:   #4F46E5;
+  --brand-2: #7C3AED;
+  --accent:  #4F46E5;
   --accent-soft: rgba(22,22,26,.06);
 
   --ink-on-brand: #FFFFFF;
@@ -271,6 +271,50 @@ a{ color:inherit; text-decoration:none; }
   pointer-events:none;
 }
 .glass > *{ position:relative; }
+
+/* ---------- 应用内导航（唯一版本） ---------- */
+.app-nav{
+  height:64px; flex:0 0 64px;
+  background:var(--glass-2);
+  backdrop-filter:blur(30px) saturate(180%);
+  -webkit-backdrop-filter:blur(30px) saturate(180%);
+  border-bottom:1px solid var(--glass-line-2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+  position:sticky; top:0; z-index:60;
+}
+.app-nav .in{
+  max-width:1120px; margin:0 auto; padding:0 40px;
+  height:100%; display:flex; align-items:center; gap:34px;
+}
+.app-nav .brand{ display:flex; align-items:center; gap:9px; }
+.app-nav .brand-m{
+  width:27px; height:27px; border-radius:9px;
+  background:var(--grad); color:#fff;
+  display:grid; place-items:center; font-size:12px; font-weight:600;
+  box-shadow:0 4px 12px -4px rgba(79,70,229,.5), inset 0 1px 0 rgba(255,255,255,.4);
+}
+.app-nav .brand-n{ font-size:14px; font-weight:600; letter-spacing:-.01em; }
+
+.app-nav .links{ display:flex; gap:26px; }
+.app-nav .links a{
+  font-size:13px; color:var(--tx-3);
+  padding:6px 0; position:relative; transition:color .16s;
+}
+.app-nav .links a:hover{ color:var(--tx); }
+.app-nav .links a.on{ color:var(--tx); font-weight:500; }
+.app-nav .links a.on::after{
+  content:""; position:absolute; left:0; right:0; bottom:-20px;
+  height:2px; border-radius:2px; background:var(--grad);
+}
+
+.app-nav .nav-r{ margin-left:auto; display:flex; align-items:center; gap:10px; }
+.app-main{ max-width:1120px; margin:0 auto; padding:46px 40px 60px; }
+
+@media (max-width:900px){
+  .app-nav .in{ padding:0 20px; gap:16px; }
+  .app-nav .links{ display:none; }
+  .app-main{ padding:28px 20px 40px; }
+}
 
 /* 头像 */
 .avatar{
