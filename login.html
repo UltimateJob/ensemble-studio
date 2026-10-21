@@ -269,8 +269,8 @@ body::before{
   const reg = document.querySelector('.alt a');
   if(reg) reg.addEventListener('click', e => {
     e.preventDefault();
-    document.querySelector('[data-p="mail"]') ? null : null;
-    UI.toast('手机号未注册会自动建号，无需单独注册');
+    document.querySelector('[data-p="mail"]').click();
+    UI.toast('切到邮箱注册 · 或直接用手机号登录（会自动建号）');
   });
 })();
 </script>

@@ -441,6 +441,13 @@ body{ min-height:100vh; }
     });
   }));
 
+  /* 导航占位项 */
+  $$('.links a').forEach(a => {
+    if(a.getAttribute('href') === '#'){
+      a.addEventListener('click', e => { e.preventDefault(); UI.toast(a.textContent.trim() + ' 页面还没做'); });
+    }
+  });
+
   /* 创建 */
   const go = document.querySelector('.go button');
   if(go) go.addEventListener('click', e => {

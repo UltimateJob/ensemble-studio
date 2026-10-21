@@ -138,4 +138,10 @@
   }
 
   window.UI = { dialog, toast, close };
+
+  /* 全局兜底：任何 href="#" 都不跳页顶 */
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href="#"]');
+    if(a) e.preventDefault();
+  }, true);
 })();
