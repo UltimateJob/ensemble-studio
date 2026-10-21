@@ -6,53 +6,78 @@
 
 ## 页面
 
+**主流程**
+
+| 文件 | 说明 |
+|---|---|
+| `login.html` | 登录 / 注册：手机验证码、微信扫码、邮箱密码 |
+| `studio.html` | 工作台：群列表 + 账户卡 + 群设置抽屉 |
+| `chat.html` | 群聊：顶栏 / 消息 / 输入框，产物收进抽屉 |
+| `builder.html` | 创建群聊：选模板、配成员、接渠道、实时预览 |
+
+**辅助**
+
 | 文件 | 说明 |
 |---|---|
 | `site.html` | 官网（滚动驱动动画） |
-| `login.html` | 登录 / 注册：手机、微信、邮箱 |
-| `home.html` | 工作台总览 |
-| `studio.html` | 群聊列表 + 账户 + 群设置抽屉 |
-| `chat.html` | 群聊（顶栏 / 消息 / 输入框） |
-| `builder.html` | 创建工作室 |
-| `themes.html` | 四套主题对比 |
-| `mobile.html` | 移动端四屏 |
-| `desktop.html` | 三栏任务室（早期版本） |
+| `mobile.html` | 移动端四屏（营销素材） |
+| `themes.html` | 四套主题对比（开发工具） |
 
-直接双击 `index.html` 即可，无构建、无依赖。
+`index.html` → 登录页，`home.html` → 工作台（旧链接兼容）。
 
-## 主流程
+## 页面状态
+
+`studio.html` 支持参数演示三种状态：
 
 ```
-login.html → studio.html → chat.html
+?state=empty     空态：四个模板入口
+?state=loading   骨架构屏
+?state=error     加载失败 + 重试
 ```
 
-## 设计
+`chat.html?state=empty` 是空群引导。
 
-**珠光 Pearl**：白纸、灰底、黑字。
+## 设计规范
 
-| | 值 |
-|---|---|
-| 底 | `#F3F4F7` |
-| 卡 | `rgba(255,255,255,.97)` |
-| 边 | `#E3E3E9` |
-| 字 | `#0D0D10` |
-| 主色 | `#16161A` |
+**珠光 Pearl** —— 白纸、灰底、一个主色。
 
-字号 7 档（11/12/13/14/16/20/28），圆角 3 档（8/12/16）。
+| Token | 值 | 用在哪 |
+|---|---|---|
+| `--bg-solid` | `#F3F4F7` | 页面底 |
+| `--glass` | `rgba(255,255,255,.97)` | 卡片 |
+| `--tx` | `#0D0D10` | 正文 |
+| `--primary` | `#4F46E5 → #7C3AED` | 主按钮、进度、选中态、logo |
+| `--success` | `#059669` | 运行中 |
+| `--warning` | `#D97706` | 等你确认 |
+| `--danger` | `#DC2626` | 风险、错误 |
 
-`tokens.css` 里有四套主题：`pearl` / `aurora` / `sunrise` / `mint`，`data-theme` 切换。
+**五个角色各有一色**，只在头像上用（11% 底 + 深字）：
+
+工头琥珀 `#B45309` · 查证蓝 `#0369A1` · 撰写紫 `#6D28D9` · 审校红 `#B91C1C` · 交付绿 `#047857`
+
+**尺寸**
+
+- 导航：64px 高，1120 宽，40 内边距 —— 全站唯一一份 `.app-nav`
+- 字号 7 档：11 / 12 / 13 / 14 / 16 / 20 / 28
+- 圆角 3 档：8 / 12 / 16
+- 间距：8 的倍数
 
 ## 官网动效
 
-用 CSS scroll-driven animations（`animation-timeline`），不依赖 JS：
+CSS scroll-driven animations（`animation-timeline`），不依赖 JS 动画库：
 
-- Hero 标题逐行升起
-- 产品图随滚动缩放淡出
-- 每个区块进入时 fade + translateY
-- 流水线从左生长
+- Hero 标题逐行升起，产品图随滚动缩放淡出
+- 每个区块进入视口时 fade + translateY
+- 流水线从左侧生长
 - 深色章节时导航自动反色
 
 系统开启"减弱动态效果"时全部关闭。
+
+## 已知限制
+
+- 390 移动断点已在 CSS 中实现，但未在真机验证（headless 无法模拟真实移动视口）
+- 深色模式未做
+- 聊天页未做 loading / error 态
 
 ## 原型说明
 
